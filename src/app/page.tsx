@@ -57,20 +57,19 @@ export default function HomePage() {
                 transition={{ duration: 0.8 }}
               >
                 <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-8 text-left">
-                  <span className="text-[#F76F53]">JirehGroup</span>
-                  <span className="text-foreground"> Technologies</span>
+                  <span className="text-[#F76F53]">lorem</span>
+                  <span className="text-foreground"> ipsum</span>
                 </h1>
                 <p className="text-xl md:text-2xl text-foreground/80 max-w-2xl mb-12 text-left">
-                  Building tomorrow&apos;s digital infrastructure today.
-                  Enterprise solutions that evolve with your business.
+                  lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-start items-start">
                   <button className="group bg-foreground text-background px-8 py-4 rounded-lg font-medium hover:bg-foreground/90 transition-all flex items-center gap-2">
-                    Start Your Journey
+                    lorem ipsum
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </button>
                   <button className="border border-foreground/20 backdrop-blur-sm bg-background/30 text-foreground px-8 py-4 rounded-lg font-medium hover:bg-foreground/5 transition-colors">
-                    View Our Work
+                    lorem ipsum
                   </button>
                 </div>
               </motion.div>
@@ -91,20 +90,18 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Services Section - Removed top margin to prevent overlap */}
         <section className="py-20 relative clear-both"> {/* Reduced vertical padding and added clear-both */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div className="text-center mb-16" {...fadeInUp}> {/* Reduced bottom margin */}
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Enterprise Solutions
+              {/* <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
+                lorem ipsum
               </h2>
               <p className="text-xl text-foreground/80 max-w-2xl mx-auto">
-                Comprehensive digital solutions tailored for modern business
-                needs
-              </p>
+                lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+              </p> */}
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {services.map((service, index) => (
                 <motion.div
                   key={index}
@@ -123,13 +120,13 @@ export default function HomePage() {
                   </div>
                 </motion.div>
               ))}
-            </div>
+            </div> */}
           </div>
         </section>
 
         {/* CTA Section */}
         <section className="py-24 relative overflow-hidden"> {/* Reduced vertical padding */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -147,7 +144,7 @@ export default function HomePage() {
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
             </motion.div>
-          </div>
+          </div> */}
         </section>
       </main>
 

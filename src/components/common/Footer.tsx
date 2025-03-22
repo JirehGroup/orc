@@ -33,7 +33,7 @@ const Footer = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="text-2xl font-bold text-foreground">
-              JirehGroup
+              lorem ipsum
             </Link>
             <p className="mt-4 text-sm text-muted-foreground">
               {t.description}
@@ -63,7 +63,7 @@ const Footer = () => {
 
         <div className="mt-8 pt-8 border-t border-border">
           <p className="text-sm text-muted-foreground text-center">
-            © {new Date().getFullYear()} Jireh Group. {t.rights}
+            © {new Date().getFullYear()} JirehGroup. {t.rights}
           </p>
         </div>
       </div>
