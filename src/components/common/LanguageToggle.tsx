@@ -12,10 +12,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/components/context/LanguageContext";
 
-const languages = [
+const languages: { code: "en" | "am" | "or"; name: string; flag: string; enabled: boolean }[] = [
+  { code: "or", name: "Oromiffa", flag: "🇪🇹", enabled: true },
   { code: "am", name: "አማርኛ", flag: "🇪🇹", enabled: true },
   { code: "en", name: "English", flag: "🇺🇸", enabled: true },
-] as const;
+];
 
 export function LanguageToggle() {
   const { language, setLanguage } = useLanguage();
@@ -28,20 +29,17 @@ export function LanguageToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        {languages.map((lang) => (
+        {languages.map(({ code, name, flag, enabled }) => (
           <DropdownMenuItem
-            key={lang.code}
-            onClick={() => lang.enabled && setLanguage(lang.code)}
-            className={`cursor-pointer ${
-              !lang.enabled && "opacity-50 cursor-not-allowed"
-            }`}
+            key={code}
+            onClick={() => enabled && setLanguage(code)}
+            className={`cursor-pointer ${enabled ? "" : "opacity-50 cursor-not-allowed"}`}
+            disabled={!enabled}
           >
-            <span className="mr-2">{lang.flag}</span>
-            {lang.name}
-            {!lang.enabled && (
-              <span className="ml-2 text-xs">(Coming soon)</span>
-            )}
-            {language === lang.code && <span className="ml-auto">✓</span>}
+            <span className="mr-2">{flag}</span>
+            {name}
+            {!enabled && <span className="ml-2 text-xs">(Coming soon)</span>}
+            {language === code && <span className="ml-auto">✓</span>}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
