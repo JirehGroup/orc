@@ -14,10 +14,13 @@ export const en = {
         },
         navigation: {
             home: "Home",
-            about: "About",
-            services: "Services",
-            products: "Products",
-            contact: "Contact",
+            about: "About us",
+            news: "News and Updates",
+            dialogue: "Dialogue",
+            resources: "Resources",
+            getInvolved: "Get Involved",
+            events: "Events",
+            contact: "Contact Us",
         },
     },
     pages: {

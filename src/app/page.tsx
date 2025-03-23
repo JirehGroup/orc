@@ -7,44 +7,23 @@ import { useLanguage } from "@/components/context/LanguageContext";
 import { translations } from "@/translations";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
-import { motion } from "framer-motion";
-import { ArrowRight, Code, Cloud, Layout } from "lucide-react";
+import {
+  motion,
+} from "framer-motion"
+import { ArrowRight } from "lucide-react";
+import { StyleSheet, useInfiniteCarousel } from "@/components/common/Carousel";
 
 export default function HomePage() {
   const { language } = useLanguage();
   const t = translations[language].pages.home;
 
-  const fadeInUp = {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 0.6 },
-  };
-
-  const services = [
-    {
-      icon: <Code className="w-6 h-6" />,
-      title: "Custom Software Development",
-      description:
-        "Tailored solutions engineered for your unique business challenges and growth objectives.",
-    },
-    {
-      icon: <Cloud className="w-6 h-6" />,
-      title: "Cloud Infrastructure",
-      description:
-        "Scalable, secure, and efficient cloud solutions to power your digital transformation.",
-    },
-    {
-      icon: <Layout className="w-6 h-6" />,
-      title: "Enterprise Systems",
-      description:
-        "Comprehensive ERP and dashboard solutions for streamlined business operations.",
-    },
-  ];
+  const { carouselRef: membersCarouselRef, carouselTrackRef: membersTrackRef } = useInfiniteCarousel();
+  const { carouselRef: sponsorsCarouselRef, carouselTrackRef: sponsorsTrackRef } = useInfiniteCarousel();
 
   return (
     <div className="flex flex-col min-h-screen bg-background overflow-hidden">
       <Header />
-      
+
       {/* Hero Section with Globe */}
       <main className="flex-grow">
         <section className="relative h-screen mb-20">
@@ -73,78 +52,141 @@ export default function HomePage() {
                   </button>
                 </div>
               </motion.div>
-              
-              {/* Globe Visualization */}
-              <div className="relative h-full w-full flex items-start lg:items-center justify-center lg:justify-end pt-12 lg:pt-0">
-                <div className="w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[600px]">
-                  <motion.div
-                    className="w-full h-full"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                  </motion.div>
-                </div>
-              </div>
             </div>
           </div>
         </section>
 
-        <section className="py-20 relative clear-both"> {/* Reduced vertical padding and added clear-both */}
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <motion.div className="text-center mb-16" {...fadeInUp}> {/* Reduced bottom margin */}
-              {/* <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                lorem ipsum
-              </h2>
-              <p className="text-xl text-foreground/80 max-w-2xl mx-auto">
-                lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              </p> */}
-            </motion.div>
-
-            {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {services.map((service, index) => (
-                <motion.div
-                  key={index}
-                  className="group relative p-8 rounded-2xl border border-foreground/10 bg-background/50 backdrop-blur-sm hover:border-foreground/30 transition-all duration-300"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.2 }}
-                >
-                  <div className="text-foreground mb-6">{service.icon}</div>
-                  <h3 className="text-xl font-semibold text-foreground mb-4">
-                    {service.title}
-                  </h3>
-                  <p className="text-foreground/70">{service.description}</p>
-                  <div className="absolute bottom-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <ArrowRight className="w-5 h-5 text-foreground" />
-                  </div>
-                </motion.div>
-              ))}
-            </div> */}
+        {/* Members Carousel Section */}
+        <section className="py-24 relative flex justify-center items-center">
+          <div id="carousel" className="w-full max-w-5xl" ref={membersCarouselRef}>
+            <h1 className="text-4xl font-bold text-center mb-12">
+              Our Members
+            </h1>
+            <div className="carousel-track" ref={membersTrackRef}>
+              <ul>
+                <li style={{
+                  backgroundImage: "url('/images/logo/ecc.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}>
+                  <div className="overlay">Ethiopian Catholic Church</div>
+                </li>
+                <li style={{
+                  backgroundImage: "url('/images/logo/ecfoe.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}>
+                  <div className="overlay">Evangelical Churches Fellowship of Ethiopia</div>
+                </li>
+                <li style={{
+                  backgroundImage: "url('/images/logo/eecmy.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}>
+                  <div className="overlay">Ethiopian Evangelical Church Mekane Yesus</div>
+                </li>
+                {/* Continue adding overlays to each remaining member item */}
+                <li style={{
+                  backgroundImage: "url('/images/logo/eias.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}>
+                  <div className="overlay">Ethiopian Islamic Affairs Supreme Council</div>
+                </li>
+                <li style={{
+                  backgroundImage: "url('/images/logo/ekhc.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}>
+                  <div className="overlay">Ethiopian Kale Heywet Church</div>
+                </li>
+                <li style={{
+                  backgroundImage: "url('/images/logo/eoc.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}>
+                  <div className="overlay">Ethiopian Orthodox Church</div>
+                </li>
+                <li style={{
+                  backgroundImage: "url('/images/logo/esda.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}>
+                  <div className="overlay">Ethiopian Seventh-day Adventist Church</div>
+                </li>
+              </ul>
+            </div>
+            <StyleSheet />
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section className="py-24 relative overflow-hidden"> {/* Reduced vertical padding */}
-          {/* <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6">
-                Ready to Transform Your Business?
-              </h2>
-              <p className="text-xl text-foreground/80 max-w-2xl mx-auto mb-12">
-                Join leading companies using JirehGroup&apos;s solutions to
-                drive their success
-              </p>
-              <button className="group bg-foreground text-background px-8 py-4 rounded-lg font-medium hover:bg-foreground/90 transition-all flex items-center gap-2 mx-auto">
-                Schedule a Consultation
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </motion.div>
-          </div> */}
+        {/* Sponsors Carousel Section */}
+        <section className="py-24 relative flex justify-center items-center">
+          <div id="carousel" className="w-full max-w-5xl" ref={sponsorsCarouselRef}>
+            <h1 className="text-4xl font-bold text-center mb-12">
+              Our Sponsors
+            </h1>
+            <div className="carousel-track" ref={sponsorsTrackRef}>
+              <ul>
+                <li style={{
+                  backgroundImage: "url('/images/logo/empty.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}></li>
+                <li style={{
+                  backgroundImage: "url('/images/logo/empty.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}></li>
+                <li style={{
+                  backgroundImage: "url('/images/logo/empty.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}></li>
+                <li style={{
+                  backgroundImage: "url('/images/logo/empty.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}></li>
+                <li style={{
+                  backgroundImage: "url('/images/logo/empty.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}></li>
+                <li style={{
+                  backgroundImage: "url('/images/logo/empty.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}></li>
+                <li style={{
+                  backgroundImage: "url('/images/logo/empty.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}></li>
+                <li style={{
+                  backgroundImage: "url('/images/logo/empty.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}></li>
+                <li style={{
+                  backgroundImage: "url('/images/logo/empty.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}></li>
+                <li style={{
+                  backgroundImage: "url('/images/logo/empty.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}></li>
+                <li style={{
+                  backgroundImage: "url('/images/logo/empty.png')",
+                  backgroundSize: "cover",
+                  backgroundPosition: "center"
+                }}></li>
+              </ul>
+            </div>
+            <StyleSheet />
+          </div>
         </section>
       </main>
 

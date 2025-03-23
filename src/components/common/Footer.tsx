@@ -63,7 +63,14 @@ const Footer = () => {
 
         <div className="mt-8 pt-8 border-t border-border">
           <p className="text-sm text-muted-foreground text-center">
-            © {new Date().getFullYear()} JirehGroup. {t.rights}
+            © {new Date().getFullYear()} {" "}
+            <Link
+              href={"https://jirehgrp.com"}
+              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              target="_blank">
+              JirehGroup.{" "}
+            </Link>
+            {t.rights}
           </p>
         </div>
       </div>

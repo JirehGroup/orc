@@ -2,6 +2,7 @@
 
 "use client";
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
@@ -19,8 +20,11 @@ const Navigation = () => {
   const navItems = [
     { name: t.home, href: '/' },
     { name: t.about, href: '/about' },
-    { name: t.services, href: '/services' },
-    { name: t.products, href: '/Products' },
+    { name: t.news, href: '/news' },
+    { name: t.dialogue, href: '/dialogue' },
+    { name: t.resources, href: '/resources' },
+    { name: t.getInvolved, href: '/getInvolved' },
+    { name: t.events, href: '/events' },
     { name: t.contact, href: '/contact' },
   ];
 
@@ -29,8 +33,14 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-bold text-foreground">
-            JirehGroup
+          <Link href="/">
+            <Image
+              src="/images/logo.png"
+              alt="Logo"
+              width={40}
+              height={40}
+              className="h-10 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation - Centered */}
