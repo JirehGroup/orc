@@ -1,0 +1,89 @@
+// structure.txt
+
+JirehGroup/
+├── next/
+├── node_modules/
+├── public/
+│   ├── fonts/
+│   │   ├── entoto.ttf
+│   │   └── fantuwua.ttf
+│   └── images/
+│       └── previewImage.png
+│
+├── src/
+│   ├── app/
+│   │   ├── about/
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── admin/
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── contact/
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── dialogue/
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── donate/
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── events/
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── news/
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── resources/
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── globals.css
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── providers.tsx
+│   │
+│   ├── components/
+│   │   ├── common/
+│   │   │   ├── Footer.tsx
+│   │   │   ├── Header.tsx
+│   │   │   ├── LanguageToggle.tsx
+│   │   │   ├── Navigation.tsx
+│   │   │   └── ThemeToggle.tsx
+│   │   │
+│   │   ├── context/
+│   │   │   ├── LanguageContext.tsx
+│   │   │   └── ThemeContext.tsx
+│   │   │
+│   │   └── ui/
+│   │       ├── aceternity/
+│   │       │   └── aceternity ui components ...
+│   │       └── shadcn/uis components ...
+│   │   
+│   ├── hooks/
+│   │   └── useCalendar.ts
+│   │   
+│   ├── lib/
+│   │   └── utils.ts
+│   │   
+│   ├── translations/
+│   │   ├── am.ts
+│   │   ├── en.ts
+│   │   ├── index.ts
+│   │   └── or.ts
+│   │
+│   └── types/
+│       ├── am.ts
+│       ├── en.ts
+│       ├── index.ts
+│       └── or.ts
+│    
+├── .gitignore
+├── components.json
+├── eslint.config.mjs
+├── next-env.d.ts
+├── next.config.ts
+├── package-lock.json
+├── package.json
+├── postcss.config.ts
+├── README.md
+├── structure.txt
+└── tsconfig.json

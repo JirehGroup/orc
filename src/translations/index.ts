@@ -1,11 +1,11 @@
 // @/translations/index.ts
 
-import { en } from "./en";
-import { am } from "./am";
 import { or } from "./or";
+import { am } from "./am";
+import { en } from "./en";
 
 export const translations = {
   or,
-  en,
   am,
+  en,
 };
