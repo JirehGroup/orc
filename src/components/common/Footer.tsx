@@ -1,6 +1,7 @@
 // @/components/common/Footer.tsx
 
 import React from "react";
+import Image from 'next/image';
 import Link from "next/link";
 import { useLanguage } from "@/components/context/LanguageContext";
 import { translations } from "@/translations";
@@ -15,7 +16,7 @@ const Footer = () => {
       links: [
         { name: t.about, href: "/about" },
         { name: t.careers, href: "/careers" },
-        { name: t.contact, href: "/contact" },
+
       ],
     },
     {
@@ -25,6 +26,13 @@ const Footer = () => {
         { name: "X", href: "https://x.com" },
       ],
     },
+    {
+      title: t.engage,
+      links: [
+        { name: t.contact, href: "/contact" },
+        { name: t.getInvolved, href: "/getInvolved" },
+      ],
+    }
   ];
 
   return (
@@ -32,8 +40,14 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="text-2xl font-bold text-foreground">
-              lorem ipsum
+            <Link href="/">
+              <Image
+                src="/images/logo.png"
+                alt="Logo"
+                width={40}
+                height={40}
+                className="h-10 w-auto"
+              />
             </Link>
             <p className="mt-4 text-sm text-muted-foreground">
               {t.description}

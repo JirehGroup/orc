@@ -23,9 +23,7 @@ const Navigation = () => {
     { name: t.news, href: '/news' },
     { name: t.dialogue, href: '/dialogue' },
     { name: t.resources, href: '/resources' },
-    { name: t.getInvolved, href: '/getInvolved' },
     { name: t.events, href: '/events' },
-    { name: t.contact, href: '/contact' },
   ];
 
   return (
