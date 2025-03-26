@@ -7,8 +7,9 @@ import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import { translations } from "@/translations";
 import { useLanguage } from "@/components/context/LanguageContext";
-import { StyleSheet, useInfiniteCarousel } from "@/components/common/Carousel";
+import { StyleSheet, useInfiniteCarousel } from "@/components/ui/custom/Carousel";
 import { DirectionAwareHover } from "@/components/ui/aceternity/direction-aware-hover";
+import { TimelinePage } from "@/components/ui/custom/Timeline";
 import { Hero } from "@/components/common/Hero";
 
 export default function HomePage() {
@@ -34,6 +35,10 @@ export default function HomePage() {
       <main className="flex-grow">
         <section className="py-24">
           <Hero />
+        </section>
+
+        <section className="py-24">
+          <TimelinePage />
         </section>
 
         {/* Members Carousel Section */}
