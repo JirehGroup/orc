@@ -1,4 +1,4 @@
-// @/components/common/Carousel.tsx
+// @/components/ui/custom/Carousel.tsx
 
 import {
     animate,

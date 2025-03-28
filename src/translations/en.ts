@@ -1,14 +1,15 @@
 // @/translations/en.tsx
 
-
 export const en = {
     common: {
         footer: {
             company: "Company",
-            about: "About",
             careers: "Careers",
-            contact: "Contact",
             social: "Social",
+            engage: "Engage",
+            about: "About",
+            contact: "Contact Us",
+            getInvolved: "Get Involved",
             description: "Description",
             rights: "All rights reserved",
         },
@@ -16,11 +17,9 @@ export const en = {
             home: "Home",
             about: "About us",
             news: "News and Updates",
-            dialogue: "Dialogue",
+            dialogue: "Interreligious Dialogue",
             resources: "Resources",
-            getInvolved: "Get Involved",
             events: "Events",
-            contact: "Contact Us",
         },
     },
     pages: {
@@ -29,6 +28,5 @@ export const en = {
             subtitle: "Subtitle",
             description: "Description",
         }
-
     },
 }
