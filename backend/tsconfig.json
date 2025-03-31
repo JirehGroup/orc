@@ -9,6 +9,6 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true
   },
-  "include": ["src", "src/services"],
+  "include": ["src", "src/services", "src/server.ts"],
   "exclude": ["node_modules"]
 }

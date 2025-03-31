@@ -1,7 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import app from "./app";
+// src/server.ts
+
 import dotenv from "dotenv";
-import mongoose from 'mongoose';
+dotenv.config();
+
+import app from "./app";
 import connectDB from './config/db';
 
 dotenv.config();
