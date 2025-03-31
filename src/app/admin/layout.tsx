@@ -15,6 +15,7 @@ const menuItems = [
   { name: "Blogs", path: "/admin/blogs" },
   { name: "News", path: "/admin/news" },
   { name: "Settings", path: "/admin/settings" },
+  { name: "Gallery", path: "/admin/gallery" },
 ];
 
 export default function AdminLayout({
