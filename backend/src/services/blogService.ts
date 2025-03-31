@@ -1,43 +1,29 @@
-// src/services/blogService.ts
-const API_URL = 'http://localhost:5000/api';
+// services/blogService.ts
+
+import { BlogInput, BlogSchema } from "../schemas/blogSchema";
+import BlogModel, { IBlog } from "../models/blogModels";
 
 export const blogService = {
-  async getAllBlogs() {
-    const response = await fetch(`${API_URL}/blogs`);
-    return response.json();
+  getAllBlogs: async (): Promise<IBlog[]> => {
+    return await BlogModel.find();
   },
 
-  async createBlog(blogData: any) {
-    const response = await fetch(`${API_URL}/blogs`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify(blogData),
-    });
-    return response.json();
+  getBlog: async (id: string): Promise<IBlog | null> => {
+    return await BlogModel.findById(id);
   },
 
-  async updateBlog(id: string, blogData: any) {
-    const response = await fetch(`${API_URL}/blogs/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-      body: JSON.stringify(blogData),
-    });
-    return response.json();
+  createBlog: async (data: BlogInput): Promise<IBlog> => {
+    const validatedData = BlogSchema.parse(data);
+    const blog = new BlogModel(validatedData);
+    return await blog.save();
   },
 
-  async deleteBlog(id: string) {
-    const response = await fetch(`${API_URL}/blogs/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    });
-    return response.json();
+  updateBlog: async (id: string, data: Partial<IBlog>): Promise<IBlog | null> => {
+    const validatedData = BlogSchema.partial().parse(data);
+    return await BlogModel.findByIdAndUpdate(id, validatedData, { new: true });
+  },
+
+  deleteBlog: async (id: string): Promise<IBlog | null> => {
+    return await BlogModel.findByIdAndDelete(id);
   },
 };

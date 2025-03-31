@@ -14,8 +14,8 @@ const menuItems = [
   { name: "Events", path: "/admin/events" },
   { name: "Blogs", path: "/admin/blogs" },
   { name: "News", path: "/admin/news" },
-  { name: "Settings", path: "/admin/settings" },
   { name: "Gallery", path: "/admin/gallery" },
+  { name: "Settings", path: "/admin/settings" },
 ];
 
 export default function AdminLayout({
@@ -48,8 +48,8 @@ export default function AdminLayout({
           </Link>
         </div>
         <div className="flex items-center space-x-2">
-          <LanguageToggle />
           <ThemeToggle />
+          <LanguageToggle />
         </div>
       </header>
 

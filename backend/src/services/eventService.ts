@@ -1,42 +1,28 @@
-import { Event, CreateEventDto, UpdateEventDto } from '../models/eventModel';
+// services/eventService.ts
 
-// This would be replaced with actual database calls
-const events: Event[] = [];
+import { EventInput, EventSchema } from "../schemas/eventSchema";
+import EventModel, { IEvent } from "../models/eventModels";
 
 export const eventService = {
-  async getAllEvents(): Promise<Event[]> {
-    return events;
+  getAllEvents: async (): Promise<IEvent[]> => {
+    return await EventModel.find();
   },
 
-  async getEvent(id: string): Promise<Event | undefined> {
-    return events.find(event => event.id === id);
+  getEvent: async (id: string): Promise<IEvent | null> => {
+    return await EventModel.findById(id);
   },
 
-  async createEvent(data: CreateEventDto): Promise<Event> {
-    const newEvent: Event = {
-      id: Date.now().toString(),
-      ...data
-    };
-    events.push(newEvent);
-    return newEvent;
+  createEvent: async (data: EventInput): Promise<IEvent> => {
+    const validatedData = EventSchema.parse(data);
+    const newEvent = new EventModel(validatedData);
+    return await newEvent.save();
   },
 
-  async updateEvent(id: string, data: UpdateEventDto): Promise<Event | undefined> {
-    const index = events.findIndex(event => event.id === id);
-    if (index === -1) return undefined;
-
-    events[index] = {
-      ...events[index],
-      ...data
-    };
-    return events[index];
+  updateEvent: async (id: string, data: Partial<IEvent>): Promise<IEvent | null> => {
+    return await EventModel.findByIdAndUpdate(id, data, { new: true });
   },
 
-  async deleteEvent(id: string): Promise<boolean> {
-    const index = events.findIndex(event => event.id === id);
-    if (index === -1) return false;
-
-    events.splice(index, 1);
-    return true;
-  }
+  deleteEvent: async (id: string): Promise<IEvent | null> => {
+    return await EventModel.findByIdAndDelete(id);
+  },
 };

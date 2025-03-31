@@ -1,50 +1,53 @@
-import { Request, Response } from 'express';
-import Blog from '../models/blogModel';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+// controller/blogController.ts
 
+import { Request, Response } from "express";
+import { blogService } from "../services/blogService";
 
-export const getAllBlogs = async (req: Request, res: Response) => {
+export const getAllBlogs = async (req: Request, res: Response): Promise<void> => {
   try {
-    const blogs = await Blog.find().sort({ date: -1 });
+    const blogs = await blogService.getAllBlogs(); // Updated to use blogService
     res.json(blogs);
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: "Server error" });
   }
 };
 
-export const createBlog = async (req: Request, res: Response) => {
+export const createBlog = async (req: Request, res: Response): Promise<void> => {
   try {
-    const blog = new Blog(req.body);
-    await blog.save();
+    const blog = await blogService.createBlog(req.body); // Updated to use blogService
     res.status(201).json(blog);
   } catch (error) {
-    res.status(400).json({ error: 'Invalid data' });
+    res.status(400).json({ error: "Invalid data" });
   }
 };
 
-export const updateBlog = async (req: Request, res: Response) => {
+export const updateBlog = async (req: Request, res: Response): Promise<void> => {
   try {
-    const blog = await Blog.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    const blog = await blogService.updateBlog(req.params.id, req.body); // Updated to use blogService
+
     if (!blog) {
-      return res.status(404).json({ error: 'Blog not found' });
+      res.status(404).json({ error: "Blog not found" });
+      return;
     }
+
     res.json(blog);
   } catch (error) {
-    res.status(400).json({ error: 'Invalid data' });
+    res.status(400).json({ error: "Invalid data" });
   }
 };
 
-export const deleteBlog = async (req: Request, res: Response) => {
+export const deleteBlog = async (req: Request, res: Response): Promise<void> => {
   try {
-    const blog = await Blog.findByIdAndDelete(req.params.id);
+    const blog = await blogService.deleteBlog(req.params.id); // Updated to use blogService
+
     if (!blog) {
-      return res.status(404).json({ error: 'Blog not found' });
+      res.status(404).json({ error: "Blog not found" });
+      return;
     }
-    res.json({ message: 'Blog deleted successfully' });
+
+    res.json({ message: "Blog deleted successfully" });
   } catch (error) {
-    res.status(500).json({ error: 'Server error' });
+    res.status(500).json({ error: "Server error" });
   }
 };

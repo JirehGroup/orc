@@ -1,0 +1,42 @@
+├── backend/
+│   ├── src/
+│   │   ├── config/
+│   │   │   └── db.ts
+│   │   ├── controllers/
+│   │   │   ├── blogController.ts
+│   │   │   ├── eventController.ts
+│   │   │   ├── galleryController.ts
+│   │   │   └── userController.ts
+│   │   ├── middleware/
+│   │   │   └── authMiddleware.ts
+│   │   ├── models/
+│   │   │   ├── blogModels.ts
+│   │   │   ├── eventModels.ts
+│   │   │   ├── galleryModels.ts
+│   │   │   └── userModels.ts
+│   │   ├── routes/
+│   │   │   ├── blogRoutes.ts
+│   │   │   ├── eventRoutes.ts
+│   │   │   ├── galleryRoutes.ts
+│   │   │   └── userRoutes.ts
+│   │   ├── schemas/
+│   │   │   ├── blogSchemas.ts
+│   │   │   ├── eventSchemas.ts
+│   │   │   ├── gallerySchemas.ts
+│   │   │   └── userSchemas.ts
+│   │   ├── services/
+│   │   │   ├── blogServices.ts
+│   │   │   ├── eventServices.ts
+│   │   │   ├── galleryServices.ts
+│   │   │   └── userServices.ts
+│   │   ├── types/
+│   │   │   ├── blogTypes.ts
+│   │   │   ├── eventTypes.ts
+│   │   │   ├── galleryTypes.ts
+│   │   │   └── userTypes.ts
+│   │   ├── app.ts
+│   │   └── server.ts
+│   ├── .gitignore
+│   ├── package.json
+│   ├── package-lock.json
+│   └── tsconfig.json

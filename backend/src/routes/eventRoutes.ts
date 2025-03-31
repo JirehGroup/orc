@@ -1,3 +1,5 @@
+// routes/eventRoutes.ts
+
 import express from 'express';
 import { eventController } from '../controllers/eventController';
 

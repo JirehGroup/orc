@@ -1,42 +1,29 @@
-import { NewsItem, CreateNewsDto, UpdateNewsDto } from '../models/newsModel';
+// services/newsService.ts
 
-// This would be replaced with actual database calls
-const news: NewsItem[] = [];
+import { NewsInput, NewsSchema } from "../schemas/newsSchema";
+import NewsModel, { INews } from "../models/newsModels";
 
 export const newsService = {
-  async getAllNews(): Promise<NewsItem[]> {
-    return news;
+  getAllNews: async (): Promise<INews[]> => {
+    return await NewsModel.find();
   },
 
-  async getNews(id: string): Promise<NewsItem | undefined> {
-    return news.find(item => item.id === id);
+  getNews: async (id: string): Promise<INews | null> => {
+    return await NewsModel.findById(id);
   },
 
-  async createNews(data: CreateNewsDto): Promise<NewsItem> {
-    const newNews: NewsItem = {
-      id: Date.now().toString(),
-      ...data
-    };
-    news.push(newNews);
-    return newNews;
+  createNews: async (data: NewsInput): Promise<INews> => {
+    const validatedData = NewsSchema.parse(data);
+    const news = new NewsModel(validatedData);
+    return await news.save();
   },
 
-  async updateNews(id: string, data: UpdateNewsDto): Promise<NewsItem | undefined> {
-    const index = news.findIndex(item => item.id === id);
-    if (index === -1) return undefined;
-
-    news[index] = {
-      ...news[index],
-      ...data
-    };
-    return news[index];
+  updateNews: async (id: string, data: Partial<INews>): Promise<INews | null> => {
+    const validatedData = NewsSchema.partial().parse(data);
+    return await NewsModel.findByIdAndUpdate(id, validatedData, { new: true });
   },
 
-  async deleteNews(id: string): Promise<boolean> {
-    const index = news.findIndex(item => item.id === id);
-    if (index === -1) return false;
-
-    news.splice(index, 1);
-    return true;
-  }
+  deleteNews: async (id: string): Promise<INews | null> => {
+    return await NewsModel.findByIdAndDelete(id);
+  },
 };
