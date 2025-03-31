@@ -1,11 +1,15 @@
+// routes/galleryRoutes.ts
+
 import express from "express";
-import { getGalleries, createGallery, updateGallery, deleteGallery } from "../controllers/galleryController";
+import { auth } from "../middleware/authMiddleware";
+import { galleryController } from "../controllers/galleryController";
 
 const router = express.Router();
 
-router.get("/", getGalleries);
-router.post("/", createGallery);
-router.put("/:id", updateGallery);
-router.delete("/:id", deleteGallery);
+router.get("/", galleryController.getAllGalleries);
+router.get("/:id", galleryController.getGallery); // Added missing route
+router.post("/", auth, galleryController.createGallery);
+router.put("/:id", auth, galleryController.updateGallery);
+router.delete("/:id", auth, galleryController.deleteGallery);
 
 export default router;

@@ -1,4 +1,5 @@
 // schemas/newsSchema.ts
+
 import { z } from "zod";
 
 export const NewsSchema = z.object({

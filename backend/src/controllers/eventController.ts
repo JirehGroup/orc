@@ -7,7 +7,7 @@ import { eventService } from "../services/eventService";
 export const eventController = {
   getAllEvents: async (req: Request, res: Response): Promise<void> => {
     try {
-      const events = await eventService.getAllEvents(); // Updated to use eventService
+      const events = await eventService.getAllEvents();
       res.json(events);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch events" });
@@ -16,7 +16,7 @@ export const eventController = {
 
   getEvent: async (req: Request, res: Response): Promise<void> => {
     try {
-      const event = await eventService.getEvent(req.params.id); // Updated to use eventService
+      const event = await eventService.getEvent(req.params.id);
       if (!event) {
         res.status(404).json({ error: "Event not found" });
         return;
@@ -29,7 +29,7 @@ export const eventController = {
 
   createEvent: async (req: Request, res: Response): Promise<void> => {
     try {
-      const newEvent = await eventService.createEvent(req.body); // Updated to use eventService
+      const newEvent = await eventService.createEvent(req.body);
       res.status(201).json(newEvent);
     } catch (error) {
       res.status(400).json({ error: "Failed to create event" });
@@ -38,7 +38,7 @@ export const eventController = {
 
   updateEvent: async (req: Request, res: Response): Promise<void> => {
     try {
-      const updatedEvent = await eventService.updateEvent(req.params.id, req.body); // Updated to use eventService
+      const updatedEvent = await eventService.updateEvent(req.params.id, req.body);
       if (!updatedEvent) {
         res.status(404).json({ error: "Event not found" });
         return;
@@ -51,7 +51,7 @@ export const eventController = {
 
   deleteEvent: async (req: Request, res: Response): Promise<void> => {
     try {
-      const result = await eventService.deleteEvent(req.params.id); // Updated to use eventService
+      const result = await eventService.deleteEvent(req.params.id);
       if (!result) {
         res.status(404).json({ error: "Event not found" });
         return;

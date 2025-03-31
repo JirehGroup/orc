@@ -1,4 +1,5 @@
 // schemas/gallerySchema.ts
+
 import { z } from "zod";
 
 export const GallerySchema = z.object({

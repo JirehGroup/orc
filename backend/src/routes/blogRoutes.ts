@@ -1,17 +1,14 @@
-import express from 'express';
-import { auth } from '../middleware/authMiddleware';
-import {
-  getAllBlogs,
-  createBlog,
-  updateBlog,
-  deleteBlog,
-} from '../controllers/blogController';
+// routes/blogRoutes.ts
+
+import express from "express";
+import { auth } from "../middleware/authMiddleware";
+import { blogController } from "../controllers/blogController";
 
 const router = express.Router();
 
-router.get('/', getAllBlogs);
-router.post('/', auth, createBlog);
-router.put('/:id', auth, updateBlog);
-router.delete('/:id', auth, deleteBlog);
+router.get("/", blogController.getAllBlogs);
+router.post("/", auth, blogController.createBlog);
+router.put("/:id", auth, blogController.updateBlog);
+router.delete("/:id", auth, blogController.deleteBlog);
 
 export default router;

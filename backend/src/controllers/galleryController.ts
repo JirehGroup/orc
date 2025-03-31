@@ -7,7 +7,7 @@ import { galleryService } from "../services/galleryService";
 export const galleryController = {
   getAllGalleries: async (req: Request, res: Response): Promise<void> => {
     try {
-      const galleries = await galleryService.getAllGalleries(); // Use galleryService to fetch galleries
+      const galleries = await galleryService.getAllGalleries();
       res.json(galleries);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch gallery items" });
@@ -16,7 +16,7 @@ export const galleryController = {
 
   getGallery: async (req: Request, res: Response): Promise<void> => {
     try {
-      const gallery = await galleryService.getGallery(req.params.id); // Use galleryService to get a single gallery
+      const gallery = await galleryService.getGallery(req.params.id);
       if (!gallery) {
         res.status(404).json({ error: "Gallery item not found" });
         return;
@@ -29,7 +29,7 @@ export const galleryController = {
 
   createGallery: async (req: Request, res: Response): Promise<void> => {
     try {
-      const newGallery = await galleryService.createGallery(req.body); // Use galleryService to create a gallery
+      const newGallery = await galleryService.createGallery(req.body);
       res.status(201).json(newGallery);
     } catch (error) {
       res.status(500).json({ error: "Failed to create gallery item" });
@@ -38,7 +38,7 @@ export const galleryController = {
 
   updateGallery: async (req: Request, res: Response): Promise<void> => {
     try {
-      const updatedGallery = await galleryService.updateGallery(req.params.id, req.body); // Use galleryService to update a gallery
+      const updatedGallery = await galleryService.updateGallery(req.params.id, req.body);
       if (!updatedGallery) {
         res.status(404).json({ error: "Gallery item not found" });
         return;
@@ -51,7 +51,7 @@ export const galleryController = {
 
   deleteGallery: async (req: Request, res: Response): Promise<void> => {
     try {
-      const result = await galleryService.deleteGallery(req.params.id); // Use galleryService to delete a gallery
+      const result = await galleryService.deleteGallery(req.params.id);
       if (!result) {
         res.status(404).json({ error: "Gallery item not found" });
         return;

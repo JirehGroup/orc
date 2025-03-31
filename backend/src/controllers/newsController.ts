@@ -2,12 +2,12 @@
 // controller/newsController.ts
 
 import { Request, Response } from "express";
-import { newsService } from "../services/newsSevice";
+import { newsService } from "../services/newsService";
 
 export const newsController = {
   getAllNews: async (req: Request, res: Response): Promise<void> => {
     try {
-      const news = await newsService.getAllNews(); // Use newsService to fetch all news
+      const news = await newsService.getAllNews();
       res.json(news);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch news" });
@@ -16,7 +16,7 @@ export const newsController = {
 
   getNews: async (req: Request, res: Response): Promise<void> => {
     try {
-      const news = await newsService.getNews(req.params.id); // Use newsService to fetch a single news item
+      const news = await newsService.getNews(req.params.id);
       if (!news) {
         res.status(404).json({ error: "News not found" });
         return;
@@ -29,7 +29,7 @@ export const newsController = {
 
   createNews: async (req: Request, res: Response): Promise<void> => {
     try {
-      const newNews = await newsService.createNews(req.body); // Use newsService to create news
+      const newNews = await newsService.createNews(req.body);
       res.status(201).json(newNews);
     } catch (error) {
       res.status(400).json({ error: "Failed to create news" });
@@ -38,7 +38,7 @@ export const newsController = {
 
   updateNews: async (req: Request, res: Response): Promise<void> => {
     try {
-      const updatedNews = await newsService.updateNews(req.params.id, req.body); // Use newsService to update news
+      const updatedNews = await newsService.updateNews(req.params.id, req.body);
       if (!updatedNews) {
         res.status(404).json({ error: "News not found" });
         return;
@@ -51,7 +51,7 @@ export const newsController = {
 
   deleteNews: async (req: Request, res: Response): Promise<void> => {
     try {
-      const result = await newsService.deleteNews(req.params.id); // Use newsService to delete news
+      const result = await newsService.deleteNews(req.params.id);
       if (!result) {
         res.status(404).json({ error: "News not found" });
         return;
