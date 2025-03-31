@@ -11,7 +11,6 @@ import { ThemeToggle } from "@/components/common/ThemeToggle";
 import { LanguageToggle } from "@/components/common/LanguageToggle";
 
 const menuItems = [
-  { name: "Dashboard", path: "/admin" },
   { name: "Events", path: "/admin/events" },
   { name: "Blogs", path: "/admin/blogs" },
   { name: "News", path: "/admin/news" },
@@ -29,7 +28,7 @@ export default function AdminLayout({
   return (
     <div className="flex flex-col h-screen">
       {/* Top Navigation - Full Width */}
-      <header className="w-full bg-background shadow p-4 flex justify-between shadow-md">
+      <header className="w-full bg-background p-4 flex justify-between shadow-md">
         <div className="flex items-center">
           <button 
             onClick={() => setIsSidebarOpen(true)}
