@@ -22,5 +22,4 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/api/events', eventRoutes);
 
-
 export default app;
