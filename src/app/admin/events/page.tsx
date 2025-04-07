@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Plus, Trash2, Edit2, Image as ImageIcon, X, AlertCircle } from "lucide-react";
 import Image from "next/image";
+import { useEffect } from "react";
 
 interface Event {
   id: string;
@@ -14,33 +15,43 @@ interface Event {
 
 export default function Events() {
   const [events, setEvents] = useState<Event[]>([
-    {
-      id: "1",
-      title: "Annual Conference 2024",
-      date: "2024-06-15",
-      description: "Our annual conference bringing together community leaders",
-      image: "/event.jpg"
-    },
-    {
-      id: "2",
-      title: "Youth Workshop",
-      date: "2024-07-20",
-      description: "Interactive workshop for young community members",
-      image: "/con.jpg"
-    }
+
   ]);
 
   const [isAddingEvent, setIsAddingEvent] = useState(false);
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
   const [deletingEvent, setDeletingEvent] = useState<Event | null>(null);
-  const [newEvent, setNewEvent] = useState({
-    title: "",
-    date: "",
-    description: "",
-    image: ""
-  });
+  const [newEvent, setNewEvent] = useState({ title: "",date: "",description: "",image: ""});
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const API_BASE = "http://localhost:5000/api/events";
+  // Fetch events from the API
 
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const res = await fetch(`${API_BASE}`);
+        if (!res.ok) {
+          throw new Error("Failed to fetch events");
+        }
+        // Check if the response is valid JSON
+        const contentType = res.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+          throw new Error("Invalid JSON response");
+        }
+        const data = await res.json();
+        setEvents(data);
+      } catch (error) {
+        console.error("Failed to fetch events:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchEvents();
+  }, []);
+ 
+  
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -56,52 +67,90 @@ export default function Events() {
       reader.readAsDataURL(file);
     }
   };
-
-  const handleAddEvent = () => {
+ 
+  const handleAddEvent = async () => {
     if (newEvent.title && newEvent.date) {
-      const event: Event = {
-        id: Date.now().toString(),
-        ...newEvent
-      };
-      setEvents([...events, event]);
-      setNewEvent({ title: "", date: "", description: "", image: "" });
-      setImagePreview(null);
+      try {
+        const res = await fetch(`${API_BASE}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify(newEvent),
+        });
+        if (!res.ok) {
+          throw new Error("Failed to create event");
+        }
+        const createdEvent = await res.json();
+        setEvents([...events, createdEvent]);
+        setNewEvent({ title: "", date: "", description: "", image: "" });
+        setImagePreview(null);
+        setIsAddingEvent(false);
+      } catch (err) {
+        console.error("Failed to create event:", err);
+      }
+    }
+  };
+    const handleEditEvent = (event: Event) => {
+      setEditingEvent(event);
+      setImagePreview(event.image || null);
+    };
+
+    const handleUpdateEvent = async () => {
+      if (editingEvent && editingEvent.title && editingEvent.date) {
+        try {
+          const res = await fetch(`${API_BASE}/${editingEvent.id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: JSON.stringify(editingEvent),
+          });
+    
+          const updated = await res.json();
+          setEvents(events.map(e => (e.id === updated.id ? updated : e)));
+          setEditingEvent(null);
+          setImagePreview(null);
+        } catch (err) {
+          console.error("Failed to update event:", err);
+        }
+      }
+    };
+
+    const handleDeleteEvent = async () => {
+      if (deletingEvent) {
+        try {
+          const res = await fetch(`${API_BASE}/${deletingEvent.id}`, {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+    
+          if (res.ok) {
+            setEvents(events.filter(e => e.id !== deletingEvent.id));
+            setDeletingEvent(null);
+          } else {
+            console.error("Delete failed");
+          }
+        } catch (err) {
+          console.error("Failed to delete event:", err);
+        }
+      }
+    };
+    
+    const handleCloseModal = () => {
       setIsAddingEvent(false);
-    }
-  };
-
-  const handleEditEvent = (event: Event) => {
-    setEditingEvent(event);
-    setImagePreview(event.image || null);
-  };
-
-  const handleUpdateEvent = () => {
-    if (editingEvent && editingEvent.title && editingEvent.date) {
-      setEvents(events.map(event => 
-        event.id === editingEvent.id ? editingEvent : event
-      ));
       setEditingEvent(null);
-      setImagePreview(null);
-    }
-  };
-
-  const handleDeleteEvent = () => {
-    if (deletingEvent) {
-      setEvents(events.filter(event => event.id !== deletingEvent.id));
       setDeletingEvent(null);
-    }
-  };
+      setImagePreview(null);
+    };
 
-  const handleCloseModal = () => {
-    setIsAddingEvent(false);
-    setEditingEvent(null);
-    setDeletingEvent(null);
-    setImagePreview(null);
-  };
-
-  const renderEventForm = (isEditing: boolean) => {
-    const event = isEditing ? editingEvent : newEvent;
-    if (!event) return null;
+    const renderEventForm = (isEditing: boolean) => {
+      const event = isEditing ? editingEvent : newEvent;
+      if (!event) return null;
 
     return (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -285,9 +334,9 @@ export default function Events() {
 
       {/* Events List */}
       <div className="grid gap-4">
-        {events.map((event) => (
+        {events.map((event, index) => (
           <div
-            key={event.id}
+            key={event.id || index}
             className="bg-background p-6 rounded-lg shadow-md flex gap-4"
           >
             {event.image && (

@@ -1,80 +1,135 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Plus, Trash2, Edit2, Image as ImageIcon, X, AlertCircle } from "lucide-react";
 import Image from "next/image";
-import { Item } from "@radix-ui/react-dropdown-menu";
+
 
 interface GalleryItem {
-    id: string;
-    title: string;
-    image?: string;
+  id: string;
+  title: string;
+  image?: string;
 }
 
 export default function Gallery() {
-  const [gallery, setGallery] = useState<GalleryItem[]>([
-    {
-      id: "1",
-      title: "Annual Conference 2024",
-      image: "/event.jpg"
-    },
-    {
-      id: "2",
-      title: "Youth Workshop",
-      image: "/con.jpg"
-    }
-  ]);
-
-  
+  const [gallery, setGallery] = useState<GalleryItem[]>([]);
   const [isAdding, setIsAdding] = useState(false);
   const [editingItem, setEditingItem] = useState<GalleryItem | null>(null);
   const [deletingItem, setDeletingItem] = useState<GalleryItem | null>(null);
-  const [newItem, setNewItem] = useState({
-    title: "",
-    image: ""
-  });
+  const [newItem, setNewItem] = useState({ title: "", image: "" });
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const API_BASE = "http://localhost:5000/api/gallery";
+
+  
+  useEffect(() => {
+    const fetchGallery = async () => {
+      setLoading(true);
+      setError(null);
+  
+      try {
+        const res = await fetch(API_BASE);
+        if (!res.ok) {
+          throw new Error("Failed to fetch gallery items");
+        }
+        const data = await res.json();
+        setGallery(data);
+      } catch (err) {
+        console.error("Error fetching gallery:", err);
+        setError("Failed to load gallery");
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchGallery();
+  }, []);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImagePreview(reader.result as string);
+        const imageData = reader.result as string;
+        setImagePreview(imageData);
         if (editingItem) {
-          setEditingItem({ ...editingItem, image: reader.result as string });
+          setEditingItem({ ...editingItem, image: imageData });
         } else {
-          setNewItem({ ...newItem, image: reader.result as string });
+          setNewItem((prev) => ({ ...prev, image: imageData }));
         }
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleAddItem = () => {
+  
+  const handleAddItem = async () => {
     if (newItem.title && newItem.image) {
       const item: GalleryItem = {
         id: Date.now().toString(),
-        ...newItem
+        ...newItem,
       };
-    setGallery([...gallery, item]);
-      setNewItem({ title: "", image: "" });
+  
+      try {
+        const res = await fetch(`${API_BASE}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(item),
+        });
+  
+        if (!res.ok) throw new Error("Failed to add gallery item");
+  
+        const data = await res.json();
+        setGallery([...gallery, data]);
+        setNewItem({ title: "", image: "" });
+        setImagePreview(null);
+        setIsAdding(false);
+      } catch (error) {
+        console.error("Error adding gallery item:", error);
+      }
+    }
+  };
+  
+  const handleEditItem = async (item: GalleryItem) => {
+    if (!editingItem) return;
+  
+    try {
+      const res = await fetch(`${API_BASE}/${editingItem.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editingItem),
+      });
+  
+      if (!res.ok) throw new Error("Failed to update gallery item");
+  
+      const updated = await res.json();
+      setGallery(gallery.map((item) => (item.id === updated.id ? updated : item)));
+      setEditingItem(null);
       setImagePreview(null);
-      setIsAdding(false);
+    } catch (error) {
+      console.error("Error editing gallery item:", error);
     }
   };
 
-  const handleEditItem = (item: GalleryItem) => {
-    setEditingItem(item);
-    setImagePreview(item.image || null);
-  };
+  const handleDeleteItem = async () => {
+    if (!deletingItem) return;
   
-    const handleDeleteItem = () => {
-    if (deletingItem) {
-      setGallery(gallery.filter(item => item.id !== deletingItem.id));
+    try {
+      const res = await fetch(`${API_BASE}/${deletingItem.id}`, {
+        method: "DELETE",
+      });
+  
+      if (!res.ok) throw new Error("Failed to delete gallery item");
+  
+      setGallery(gallery.filter((item) => item.id !== deletingItem.id));
       setDeletingItem(null);
+    } catch (error) {
+      console.error("Error deleting gallery item:", error);
     }
   };
+  
+
   
   const handleCloseModal = () => {
     setIsAdding(false);
@@ -86,6 +141,7 @@ export default function Gallery() {
   const renderGalleryForm = (isEditing: boolean) => {
     const item = isEditing ? editingItem : newItem;
     if (!item) return null;
+
 
     return (
       <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -102,7 +158,21 @@ export default function Gallery() {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium mb-1">Ga Image</label>
+                <label className="block text-sm font-medium mb-1">Title</label>
+                <input
+                  type="text"
+                  value={item.title}
+                  onChange={(e) => {
+                    const title = e.target.value;
+                    if (isEditing && editingItem) {
+                      setEditingItem({ ...editingItem, title });
+                    } else {
+                      setNewItem({ ...newItem, title });
+                    }
+                  }}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                  placeholder="Enter image title"
+                />
                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-dashed rounded-md">
                   <div className="space-y-1 text-center">
                     {imagePreview ? (
@@ -177,38 +247,38 @@ export default function Gallery() {
   };
 
   const renderDeleteConfirmation = () => {
-    if (!deletingItem) return null;
+      if (!deletingItem) return null;
 
-    return (
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-        <div className="bg-background rounded-lg shadow-lg max-w-md w-full">
-          <div className="p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <AlertCircle className="w-5 h-5 text-destructive" />
-              <h2 className="text-xl font-semibold">Delete Image</h2>
-            </div>
-            <p className="text-muted-foreground mb-6">
-              Are you sure you want to delete "{deletingItem.title}"? This action cannot be undone.
-            </p>
-            <div className="flex justify-end gap-2">
-              <button
-                onClick={() => setDeletingItem(null)}
-                className="px-4 py-2 bg-muted rounded-md hover:bg-muted/80"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={handleDeleteItem}
-                className="px-4 py-2 bg-destructive text-destructive-foreground rounded-md hover:bg-destructive/90"
-              >
-                Delete
-              </button>
+      return (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-background rounded-lg shadow-lg max-w-md w-full">
+            <div className="p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <AlertCircle className="w-5 h-5 text-destructive" />
+                <h2 className="text-xl font-semibold">Delete Image</h2>
+              </div>
+              <p className="text-muted-foreground mb-6">
+                Are you sure you want to delete "{deletingItem.title}"? This action cannot be undone.
+              </p>
+              <div className="flex justify-end gap-2">
+                <button
+                  onClick={() => setDeletingItem(null)}
+                  className="px-4 py-2 bg-muted rounded-md hover:bg-muted/80"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleDeleteItem}
+                  className="px-4 py-2 bg-destructive text-destructive-foreground rounded-md hover:bg-destructive/90"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
-  };
+      );
+    };
 
   return (
     <main className="p-6">
@@ -232,9 +302,9 @@ export default function Gallery() {
       {/* Events List */}
       <div className="justify-center items-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-6xl">
-          {gallery.map((item) => (
+          {gallery.map((item, index) => (
             <div
-              key={item.id}
+              key={item.id || index}
               className="bg-background p-6 rounded-lg shadow-md flex flex-col items-center"
             >
               {item.image && (

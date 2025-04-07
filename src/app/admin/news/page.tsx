@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Plus, Trash2, Edit2, Image as ImageIcon, X, AlertCircle } from "lucide-react";
 import Image from "next/image";
+import { useEffect } from "react";
 
 interface NewsItem {
   id: string;
@@ -15,23 +16,24 @@ interface NewsItem {
 
 export default function News() {
   const [news, setNews] = useState<NewsItem[]>([
-    {
-      id: "1",
-      title: "Community Center Opens New Youth Wing",
-      date: "2024-03-15",
-      content: "The community center is excited to announce the opening of our new youth wing, providing dedicated space for young people to learn, grow, and connect.",
-      image: "/images/news/youth-wing.jpg",
-      category: "Announcements"
-    },
-    {
-      id: "2",
-      title: "Local Artist Exhibition",
-      date: "2024-03-20",
-      content: "Join us for an exhibition featuring works from local artists, showcasing the vibrant creative spirit of our community.",
-      image: "/images/news/exhibition.jpg",
-      category: "Events"
-    }
+  
   ]);
+  const API_BASE = "http://localhost:5000/api/blogs";
+  // Fetch news from the server
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        const res = await fetch(API_BASE);
+        if (!res.ok) throw new Error(`Failed to fetch news: ${res.statusText}`);
+        const data = await res.json();
+        setNews(data);
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      }
+    };
+
+    fetchNews();
+  }, []);
 
   const [isAddingNews, setIsAddingNews] = useState(false);
   const [editingNews, setEditingNews] = useState<NewsItem | null>(null);
@@ -45,32 +47,57 @@ export default function News() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [deletingNews, setDeletingNews] = useState<NewsItem | null>(null);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-        if (editingNews) {
-          setEditingNews({ ...editingNews, image: reader.result as string });
-        } else {
-          setNewNews({ ...newNews, image: reader.result as string });
-        }
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+  
+    const formData = new FormData();
+    formData.append("image", file);
+  
+    try {
+      const res = await fetch(`${API_BASE}`, {
+        method: "POST",
+        body: formData,
+      });
+  
+      if (!res.ok) {
+        throw new Error(`Image upload failed: ${res.statusText}`);
+      }
+  
+      const data = await res.json();
+      const imageUrl = data.url;
+  
+      setImagePreview(imageUrl);
+      if (editingNews) {
+        setEditingNews({ ...editingNews, image: imageUrl });
+      } else {
+        setNewNews({ ...newNews, image: imageUrl });
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
     }
   };
-
-  const handleAddNews = () => {
+  const handleAddNews = async () => {
     if (newNews.title && newNews.date && newNews.content && newNews.category) {
-      const newsItem: NewsItem = {
-        id: Date.now().toString(),
-        ...newNews
-      };
-      setNews([...news, newsItem]);
-      setNewNews({ title: "", date: "", content: "", image: "", category: "" });
-      setImagePreview(null);
-      setIsAddingNews(false);
+      try {
+        const res = await fetch(`${API_BASE}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newNews),
+        });
+  
+        if (!res.ok) {
+          throw new Error(`Failed to add news: ${res.statusText}`);
+        }
+  
+        const createdNews = await res.json();
+        setNews([...news, createdNews]);
+        setNewNews({ title: "", date: "", content: "", image: "", category: "" });
+        setImagePreview(null);
+        setIsAddingNews(false);
+      } catch (error) {
+        console.error("Error adding news:", error);
+      }
     }
   };
 
@@ -79,20 +106,45 @@ export default function News() {
     setImagePreview(newsItem.image || null);
   };
 
-  const handleUpdateNews = () => {
+  const handleUpdateNews = async () => {
     if (editingNews && editingNews.title && editingNews.date && editingNews.content && editingNews.category) {
-      setNews(news.map(item => 
-        item.id === editingNews.id ? editingNews : item
-      ));
-      setEditingNews(null);
-      setImagePreview(null);
+      try {
+        const res = await fetch(`${API_BASE}${editingNews.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(editingNews),
+        });
+  
+        if (!res.ok) {
+          throw new Error(`Failed to update news: ${res.statusText}`);
+        }
+  
+        const updatedNews = await res.json();
+        setNews(news.map(item => (item.id === updatedNews.id ? updatedNews : item)));
+        setEditingNews(null);
+        setImagePreview(null);
+      } catch (error) {
+        console.error("Error updating news:", error);
+      }
     }
   };
 
-  const handleDeleteNews = () => {
+  const handleDeleteNews = async () => {
     if (deletingNews) {
-      setNews(news.filter(item => item.id !== deletingNews.id));
-      setDeletingNews(null);
+      try {
+        const res = await fetch(`${API_BASE}${deletingNews.id}`, {
+          method: "DELETE",
+        });
+  
+        if (!res.ok) {
+          throw new Error(`Failed to delete news: ${res.statusText}`);
+        }
+  
+        setNews(news.filter(item => item.id !== deletingNews.id));
+        setDeletingNews(null);
+      } catch (error) {
+        console.error("Error deleting news:", error);
+      }
     }
   };
 

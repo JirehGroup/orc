@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Plus, Trash2, Edit2, Image as ImageIcon, Tag, X, AlertCircle } from "lucide-react";
 import Image from "next/image";
+import { useEffect } from "react";
+
 
 interface BlogPost {
   id: string;
@@ -16,28 +18,27 @@ interface BlogPost {
 }
 
 export default function Blogs() {
-  const [blogs, setBlogs] = useState<BlogPost[]>([
-    {
-      id: "1",
-      title: "The Importance of Community Engagement",
-      date: "2024-03-15",
-      content: "Community engagement plays a vital role in building strong, resilient neighborhoods. Through active participation and collaboration, we can create lasting positive change in our communities.",
-      image: "/images/blogs/community.jpg",
-      author: "John Smith",
-      tags: ["Community", "Engagement", "Leadership"],
-      status: "published"
-    },
-    {
-      id: "2",
-      title: "Youth Programs: Building Tomorrow's Leaders",
-      date: "2024-03-20",
-      content: "Our youth programs are designed to empower young people with the skills and confidence they need to become future leaders. We focus on mentorship, education, and hands-on experience.",
-      image: "/images/blogs/youth.jpg",
-      author: "Sarah Johnson",
-      tags: ["Youth", "Education", "Leadership"],
-      status: "draft"
-    }
-  ]);
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
+  const API_BASE = "http://localhost:5000/api/blogs";
+  // Fetch blogs from the backend
+  useEffect(() => {
+    const fetchBlogs = async () => {
+      const res = await fetch(`${API_BASE}`);
+      if (!res.ok) {
+        console.error("Failed to fetch blogs:", res.statusText);
+        return;
+      } 
+      // Check if the response is valid JSON
+      if (!res.headers.get("content-type")?.includes("application/json")) {
+        console.error("Invalid JSON response");
+        return;
+      }
+      const data = await res.json();
+      setBlogs(data);
+    };
+  
+    fetchBlogs();
+  }, []);
 
   const [isAddingBlog, setIsAddingBlog] = useState(false);
   const [editingBlog, setEditingBlog] = useState<BlogPost | null>(null);
@@ -99,16 +100,24 @@ export default function Blogs() {
     }
   };
 
-  const handleAddBlog = () => {
+  const handleAddBlog = async() => {
     if (newBlog.title && newBlog.date && newBlog.content && newBlog.author) {
-      const blogPost: BlogPost = {
-        id: Date.now().toString(),
-        ...newBlog
-      };
-      setBlogs([...blogs, blogPost]);
-      setNewBlog({ title: "", date: "", content: "", image: "", author: "", tags: [], status: "draft" });
-      setImagePreview(null);
-      setIsAddingBlog(false);
+      try {
+      const res = await fetch(`${API_BASE}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newBlog),
+      });
+      
+      if (res.ok) {
+        const created = await res.json();
+        setBlogs([...blogs, created]);
+        setNewBlog({ title: "", date: "", content: "", image: "", author: "", tags: [], status: "draft" });
+        setImagePreview(null);
+        setIsAddingBlog(false);}
+      }catch (err) {
+        console.error("Failed to create event:", err);
+      }
     }
   };
 
@@ -117,20 +126,43 @@ export default function Blogs() {
     setImagePreview(blog.image || null);
   };
 
-  const handleUpdateBlog = () => {
+  const handleUpdateBlog = async () => {
     if (editingBlog && editingBlog.title && editingBlog.date && editingBlog.content && editingBlog.author) {
-      setBlogs(blogs.map(blog => 
-        blog.id === editingBlog.id ? editingBlog : blog
-      ));
-      setEditingBlog(null);
-      setImagePreview(null);
+      try {
+        const res = await fetch(`${API_BASE}${editingBlog.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(editingBlog),
+        });
+  
+        if (res.ok) {
+          const updated = await res.json();
+          setBlogs(blogs.map(blog => (blog.id === updated.id ? updated : blog)));
+          setEditingBlog(null);
+          setImagePreview(null);
+        }
+      } catch (err) {
+        console.error("Failed to update blog:", err);
+      }
     }
   };
 
-  const handleDeleteBlog = () => {
+  const handleDeleteBlog = async () => {
     if (deletingBlog) {
-      setBlogs(blogs.filter(item => item.id !== deletingBlog.id));
-      setDeletingBlog(null);
+      try {
+        const res = await fetch(`/api/blogs/${deletingBlog.id}`, {
+          method: "DELETE",
+        });
+  
+        if (res.ok) {
+          setBlogs(blogs.filter(item => item.id !== deletingBlog.id));
+          setDeletingBlog(null);
+        } else {
+          console.error("Failed to delete blog:", res.statusText);
+        }
+      } catch (err) {
+        console.error("Failed to delete blog:", err);
+      }
     }
   };
 
@@ -388,7 +420,7 @@ export default function Blogs() {
 
       {/* Blog List */}
       <div className="grid gap-4">
-        {blogs.map((item) => (
+        {blogs?.map((item) => (
           <div
             key={item.id}
             className="bg-background p-6 rounded-lg shadow-md flex gap-4"
