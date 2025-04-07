@@ -20,7 +20,22 @@ interface BlogPost {
 export default function Blogs() {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const API_BASE = "http://localhost:5000/api/blogs";
-  // Fetch blogs from the backend
+  const [isAddingBlog, setIsAddingBlog] = useState(false);
+  const [editingBlog, setEditingBlog] = useState<BlogPost | null>(null);
+  const [newBlog, setNewBlog] = useState({
+    title: "",
+    date: "",
+    content: "",
+    image: "",
+    author: "",
+    tags: [] as string[],
+    status: "draft" as "draft" | "published"
+  });
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [newTag, setNewTag] = useState("");
+  const [deletingBlog, setDeletingBlog] = useState<BlogPost | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchBlogs = async () => {
       const res = await fetch(`${API_BASE}`);
@@ -40,21 +55,6 @@ export default function Blogs() {
     fetchBlogs();
   }, []);
 
-  const [isAddingBlog, setIsAddingBlog] = useState(false);
-  const [editingBlog, setEditingBlog] = useState<BlogPost | null>(null);
-  const [newBlog, setNewBlog] = useState({
-    title: "",
-    date: "",
-    content: "",
-    image: "",
-    author: "",
-    tags: [] as string[],
-    status: "draft" as "draft" | "published"
-  });
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [newTag, setNewTag] = useState("");
-  const [deletingBlog, setDeletingBlog] = useState<BlogPost | null>(null);
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -72,6 +72,7 @@ export default function Blogs() {
   };
 
   const handleAddTag = (e: React.KeyboardEvent) => {
+
     if (e.key === "Enter" && newTag.trim()) {
       e.preventDefault();
       const currentTags = editingBlog ? editingBlog.tags : newBlog.tags;
@@ -101,6 +102,10 @@ export default function Blogs() {
   };
 
   const handleAddBlog = async() => {
+    if (!newBlog.title || !newBlog.date || !newBlog.content || !newBlog.author) {
+      setError("Please fill in all required fields.");
+      return;
+    }
     if (newBlog.title && newBlog.date && newBlog.content && newBlog.author) {
       try {
       const res = await fetch(`${API_BASE}`, {
@@ -191,6 +196,8 @@ export default function Blogs() {
               </button>
             </div>
             <div className="space-y-4">
+              {error && (
+                <div className="p-4 bg-red-100 text-red-800 rounded-md mb-4">{error}</div>)}
               <div>
                 <label className="block text-sm font-medium mb-1">Title</label>
                 <input

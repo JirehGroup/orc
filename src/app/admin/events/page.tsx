@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Plus, Trash2, Edit2, Image as ImageIcon, X, AlertCircle } from "lucide-react";
 import Image from "next/image";
 import { useEffect } from "react";
+import { set } from "mongoose";
 
 interface Event {
   id: string;
@@ -14,16 +15,14 @@ interface Event {
 }
 
 export default function Events() {
-  const [events, setEvents] = useState<Event[]>([
-
-  ]);
-
+  const [events, setEvents] = useState<Event[]>([]);
   const [isAddingEvent, setIsAddingEvent] = useState(false);
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
   const [deletingEvent, setDeletingEvent] = useState<Event | null>(null);
   const [newEvent, setNewEvent] = useState({ title: "",date: "",description: "",image: ""});
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const API_BASE = "http://localhost:5000/api/events";
   // Fetch events from the API
 
@@ -69,6 +68,10 @@ export default function Events() {
   };
  
   const handleAddEvent = async () => {
+    if (!newEvent.title || !newEvent.date || !newEvent.description) {
+      setError("Please fill in all required fields");
+      return;
+    }
     if (newEvent.title && newEvent.date) {
       try {
         const res = await fetch(`${API_BASE}`, {
@@ -166,6 +169,7 @@ export default function Events() {
               </button>
             </div>
             <div className="space-y-4">
+              {error && (<div className="mb-4 text-red-600 text-sm">{error}</div>)}
               <div>
                 <label className="block text-sm font-medium mb-1">Title</label>
                 <input

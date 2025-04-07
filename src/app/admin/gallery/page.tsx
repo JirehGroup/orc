@@ -65,6 +65,10 @@ export default function Gallery() {
 
   
   const handleAddItem = async () => {
+    if (!newItem.title || !newItem.image) {
+      setError("Please fill in all fields");
+      return;
+    }
     if (newItem.title && newItem.image) {
       const item: GalleryItem = {
         id: Date.now().toString(),
@@ -157,6 +161,11 @@ export default function Gallery() {
               </button>
             </div>
             <div className="space-y-4">
+              {error && (
+                <div className="bg-red-100 text-red-700 p-4 rounded-md">
+                  {error}
+                </div>
+              )}
               <div>
                 <label className="block text-sm font-medium mb-1">Title</label>
                 <input
@@ -293,13 +302,13 @@ export default function Gallery() {
         </button>
       </div>
 
-      {/* Event Form Modal */}
+     
       {(isAdding || editingItem) && renderGalleryForm(!!editingItem)}
 
-      {/* Delete Confirmation Modal */}
+     
       {deletingItem && renderDeleteConfirmation()}
 
-      {/* Events List */}
+      
       <div className="justify-center items-center">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full max-w-6xl">
           {gallery.map((item, index) => (

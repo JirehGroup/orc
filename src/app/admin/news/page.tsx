@@ -15,12 +15,17 @@ interface NewsItem {
 }
 
 export default function News() {
-  const [news, setNews] = useState<NewsItem[]>([
-  
-  ]);
+  const [news, setNews] = useState<NewsItem[]>([]);
   const API_BASE = "http://localhost:5000/api/blogs";
-  // Fetch news from the server
-  useEffect(() => {
+  const [isAddingNews, setIsAddingNews] = useState(false);
+  const [editingNews, setEditingNews] = useState<NewsItem | null>(null);
+  const [newNews, setNewNews] = useState({ title: "", date: "", content: "",image: "",category: ""});
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [deletingNews, setDeletingNews] = useState<NewsItem | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+   // Fetch news from the server
+   useEffect(() => {
     const fetchNews = async () => {
       try {
         const res = await fetch(API_BASE);
@@ -34,18 +39,6 @@ export default function News() {
 
     fetchNews();
   }, []);
-
-  const [isAddingNews, setIsAddingNews] = useState(false);
-  const [editingNews, setEditingNews] = useState<NewsItem | null>(null);
-  const [newNews, setNewNews] = useState({
-    title: "",
-    date: "",
-    content: "",
-    image: "",
-    category: ""
-  });
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [deletingNews, setDeletingNews] = useState<NewsItem | null>(null);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -77,7 +70,12 @@ export default function News() {
       console.error("Error uploading image:", error);
     }
   };
+
   const handleAddNews = async () => {
+    if (!newNews.title || !newNews.date || !newNews.content || !newNews.category) {
+      setError("All fields are required.");
+      return;
+    }
     if (newNews.title && newNews.date && newNews.content && newNews.category) {
       try {
         const res = await fetch(`${API_BASE}`, {
@@ -173,6 +171,7 @@ export default function News() {
               </button>
             </div>
             <div className="space-y-4">
+              {error && <div className="text-red-600 text-sm">{error}</div>}
               <div>
                 <label className="block text-sm font-medium mb-1">Title</label>
                 <input
