@@ -5,8 +5,7 @@ JirehGroup/
 ├── node_modules/
 ├── public/
 │   ├── fonts/
-│   │   ├── entoto.ttf
-│   │   └── fantuwua.ttf
+│   │   └── entoto.ttf
 │   └── images/
 │       └── previewImage.png
 │
