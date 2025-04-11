@@ -49,7 +49,7 @@ const EventsPage = () => {
     <div className="flex flex-col min-h-screen bg-background overflow-hidden px-4 md:px-20 py-12">
       <Header />
 
-      <main className="flex-grow container mx-auto space-y-24 lg:py-20 lg:px-44">
+      <main className="flex-grow container mx-auto space-y-8 sm:space-y-12 md:space-y-24 py-8 sm:py-12 md:py-20  sm:px-8 md:px-16 lg:px-44">
         {/* UPCOMING EVENTS */}
         <section>
           <h2 className="text-2xl font-bold mb-6">Upcoming Events</h2>
@@ -57,15 +57,15 @@ const EventsPage = () => {
             {upcomingEvents.map((event) => (
               <div
                 key={event.id}
-                className="p-4 border rounded-lg shadow-sm bg-white hover:shadow-md transition"
+                className="p-4 border rounded-lg shadow-sm hover:shadow-md transition"
               >
                 {/* Top Info */}
                 <div className="space-y-3">
-                  <p className="flex items-center text-sm text-gray-500">
+                  <p className="flex items-center text-sm text-lg">
                     <Calendar className="w-4 h-4 mr-2" />
                     {event.date}
                   </p>
-                  <h3 className="text-xl font-semibold text-gray-800">{event.title}</h3>
+                  <h3 className="text-xl font-semibold text-lg">{event.title}</h3>
 
                   {/* Image with Hover */}
                   <div className="overflow-hidden rounded-md">
@@ -76,8 +76,8 @@ const EventsPage = () => {
                     />
                   </div>
 
-                  <p className="text-gray-700 text-base">{event.description}</p>
-                  <p className="flex items-center text-sm text-gray-600">
+                  <p className="text-lg text-base">{event.description}</p>
+                  <p className="flex items-center text-sm text-lg">
                     <MapPin className="w-4 h-4 mr-2" />
                     {event.location}
                   </p>
@@ -94,7 +94,7 @@ const EventsPage = () => {
             {pastEvents.map((event) => (
               <div
                 key={event.id}
-                className="flex flex-col md:flex-row items-start p-4 border rounded-lg shadow-sm bg-white hover:shadow-md transition"
+                className="flex flex-col md:flex-row items-start p-4 border rounded-lg shadow-sm hover:shadow-md transition"
               >
                 {/* Image with Hover */}
                 <div className="overflow-hidden rounded-md w-full md:w-1/3 mb-4 md:mb-0 md:mr-6">
@@ -107,16 +107,16 @@ const EventsPage = () => {
 
                 {/* Details */}
                 <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-gray-800">{event.title}</h3>
-                  <p className="flex items-center text-sm text-gray-500 mt-1">
+                  <h3 className="text-xl font-semibold text-lg">{event.title}</h3>
+                  <p className="flex items-center text-sm text-lg mt-1">
                     <Calendar className="w-4 h-4 mr-2" />
                     {event.date}
                   </p>
-                  <p className="flex items-center text-sm text-gray-500">
+                  <p className="flex items-center text-sm text-lg">
                     <MapPin className="w-4 h-4 mr-2" />
                     {event.location}
                   </p>
-                  <p className="mt-2 text-gray-700">{event.description}</p>
+                  <p className="mt-2 text-lg">{event.description}</p>
                 </div>
               </div>
             ))}
