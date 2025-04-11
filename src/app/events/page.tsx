@@ -65,11 +65,11 @@ const EventsPage = () => {
               >
                 {/* Top Info */}
                 <div className="space-y-3">
-                  <p className="flex items-center text-sm text-lg">
+                  <p className="flex items-center text-sm">
                     <Calendar className="w-4 h-4 mr-2" />
                     {event.date}
                   </p>
-                  <h3 className="text-xl font-semibold text-lg">{event.title}</h3>
+                  <h3 className="text-xl font-semibold">{event.title}</h3>
 
                   {/* Image with Hover */}
                   <div className="overflow-hidden rounded-md">
@@ -80,8 +80,8 @@ const EventsPage = () => {
                     />
                   </div>
 
-                  <p className="text-lg text-base">{event.description}</p>
-                  <p className="flex items-center text-sm text-lg">
+                  <p className="text-lg">{event.description}</p>
+                  <p className="flex items-center text-sm">
                     <MapPin className="w-4 h-4 mr-2" />
                     {event.location}
                   </p>
@@ -111,12 +111,12 @@ const EventsPage = () => {
 
                 {/* Details */}
                 <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-lg">{event.title}</h3>
-                  <p className="flex items-center text-sm text-lg mt-1">
+                  <h3 className="text-xl font-semibold">{event.title}</h3>
+                  <p className="flex items-center text-sm mt-1">
                     <Calendar className="w-4 h-4 mr-2" />
                     {event.date}
                   </p>
-                  <p className="flex items-center text-sm text-lg">
+                  <p className="flex items-center text-sm">
                     <MapPin className="w-4 h-4 mr-2" />
                     {event.location}
                   </p>
