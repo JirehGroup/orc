@@ -41,8 +41,8 @@ const Navigation = () => {
             />
           </Link>
 
-          {/* Desktop Navigation - Centered */}
-          <div className="hidden md:flex items-center justify-center space-x-8">
+          {/* Desktop Navigation - Centered - only visible on large screens */}
+          <div className="hidden lg:flex items-center justify-center space-x-8">
             {navItems.map((item) => (
               <Link
                 key={item.name}
@@ -55,31 +55,28 @@ const Navigation = () => {
           </div>
 
           {/* Toggles */}
-          <div className="hidden md:flex items-center space-x-2">
+          <div className="flex items-center space-x-2">
             <ThemeToggle />
             <LanguageToggle />
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center space-x-2">
-            <ThemeToggle />
-            <LanguageToggle />
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </Button>
+            {/* Hamburger menu button - visible on mobile and tablet (anything below lg) */}
+            <div className="lg:hidden">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsOpen(!isOpen)}
+              >
+                {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+              </Button>
+            </div>
           </div>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile/Tablet menu - expanded on small and medium screens */}
         <motion.div
           initial={{ height: 0, opacity: 0 }}
           animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
           transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden bg-background"
+          className="lg:hidden overflow-hidden bg-background"
         >
           <div className="py-2 space-y-1">
             {navItems.map((item) => (

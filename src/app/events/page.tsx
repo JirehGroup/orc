@@ -1,3 +1,6 @@
+/* eslint-disable @next/next/no-img-element */
+// @/app/events/page.tsx
+
 "use client";
 import React from "react";
 import Header from "@/components/common/Header";
@@ -46,12 +49,13 @@ const pastEvents = [
 
 const EventsPage = () => {
   return (
-    <div className="flex flex-col min-h-screen bg-background overflow-hidden px-4 md:px-20 py-12">
+    <div className="flex flex-col min-h-screen bg-background">
       <Header />
 
-      <main className="flex-grow container mx-auto space-y-24 lg:py-20 lg:px-44">
+      {/* Add pt-16 to account for the fixed navbar height */}
+      <main className="flex-grow container mx-auto pt-32 pb-16 px-4 lg:px-44">
         {/* UPCOMING EVENTS */}
-        <section>
+        <section className="mb-16">
           <h2 className="text-2xl font-bold mb-6">Upcoming Events</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {upcomingEvents.map((event) => (
@@ -88,7 +92,7 @@ const EventsPage = () => {
         </section>
 
         {/* PAST EVENTS */}
-        <section>
+        <section className="mb-16">
           <h2 className="text-2xl font-bold mb-6">Past Events</h2>
           <div className="space-y-6">
             {pastEvents.map((event) => (
