@@ -21,9 +21,9 @@ const Navigation = () => {
     { name: t.home, href: '/' },
     { name: t.about, href: '/about' },
     { name: t.news, href: '/news' },
-    { name: t.dialogue, href: '/dialogue' },
-    { name: t.resources, href: '/resources' },
     { name: t.events, href: '/events' },
+    { name: t.blogs, href: '/blogs' },
+    { name: t.gallery, href: '/gallery' },
   ];
 
   return (

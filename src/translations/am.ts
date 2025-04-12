@@ -1,4 +1,4 @@
-// @/translations/am.ts
+// @/translations/en.tsx
 
 export const am = {
     common: {
@@ -9,6 +9,8 @@ export const am = {
             engage: "Engage",
             about: "About",
             contact: "Contact Us",
+            dialogue: "Interreligious Dialogue",
+            resources: "Resources",
             getInvolved: "Get Involved",
             description: "Description",
             rights: "All rights reserved",
@@ -17,9 +19,9 @@ export const am = {
             home: "Home",
             about: "About us",
             news: "News and Updates",
-            dialogue: "Interreligious Dialogue",
-            resources: "Resources",
+            blogs: "Blogs",
             events: "Events",
+            gallery: "Gallery",
         },
     },
     pages: {
