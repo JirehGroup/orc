@@ -2,7 +2,7 @@
 // @/app/gallery/page.tsx
 
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 
@@ -25,6 +25,8 @@ const galleryItems = [
 ];
 
 const GalleryPage = () => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Header />
@@ -38,6 +40,7 @@ const GalleryPage = () => {
               <div
                 key={item.id}
                 className="p-4 border rounded-lg shadow-sm hover:shadow-md transition"
+                onClick={() => setSelectedImage(item.image)} // Open modal with selected image
               >
                 {/* Image */}
                 {item.image && (
@@ -57,6 +60,25 @@ const GalleryPage = () => {
           </div>
         </section>
       </main>
+
+      {/* Modal for Image */}
+      {selectedImage && (
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center">
+          <div className="relative bg-white dark:bg-gray-900 p-4 rounded-lg shadow-lg">
+            <button
+              onClick={() => setSelectedImage(null)} // Close modal
+              className="absolute top-2 right-2 text-white bg-black rounded-full p-1 hover:bg-gray-700"
+            >
+              ✕
+            </button>
+            <img
+              src={selectedImage}
+              alt="Selected"
+              className="max-w-full max-h-screen rounded-md"
+            />
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>
