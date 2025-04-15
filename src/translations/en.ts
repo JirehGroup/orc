@@ -22,6 +22,7 @@ export const en = {
             blogs: "Blogs",
             events: "Events",
             gallery: "Gallery",
+         
         },
     },
     pages: {

@@ -1,4 +1,5 @@
 // @/translations/en.tsx
+import { User } from "lucide-react";
 
 export const am = {
     common: {

@@ -11,11 +11,14 @@ import { useLanguage } from '@/components/context/LanguageContext';
 import { translations } from '@/translations';
 import { ThemeToggle } from './ThemeToggle';
 import { LanguageToggle } from './LanguageToggle';
+import { User } from "lucide-react";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { language } = useLanguage();
   const t = translations[language].common.navigation;
+ 
+  
 
   const navItems = [
     { name: t.home, href: '/' },
@@ -24,6 +27,7 @@ const Navigation = () => {
     { name: t.events, href: '/events' },
     { name: t.blogs, href: '/blogs' },
     { name: t.gallery, href: '/gallery' },
+
   ];
 
   return (
@@ -52,6 +56,12 @@ const Navigation = () => {
                 {item.name}
               </Link>
             ))}
+          </div>
+          {/* User Icon */}
+          <div className="hidden lg:flex items-center space-x-2">
+            <Link href="/auth">
+              <User className="h-5 w-5 text-foreground/80 hover:text-foreground transition-colors" />
+            </Link>
           </div>
 
           {/* Toggles */}
