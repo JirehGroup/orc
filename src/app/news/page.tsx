@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import React, { useState } from "react";
@@ -75,7 +76,7 @@ export default function NewsPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div className="flex flex-col min-h-screen bg-background">
       <Header />
 
       <main className="flex-grow container mx-auto pt-32 pb-20 px-6 lg:px-24 space-y-20">
