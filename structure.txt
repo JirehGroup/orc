@@ -11,9 +11,6 @@ JirehGroup/
 │
 ├── src/
 │   ├── app/
-│   │   ├── about/
-│   │   │   ├── layout.tsx
-│   │   │   └── page.tsx
 │   │   ├── admin/
 │   │   │   ├── layout.tsx
 │   │   │   └── page.tsx
@@ -23,10 +20,16 @@ JirehGroup/
 │   │   ├── dialogue/
 │   │   │   ├── layout.tsx
 │   │   │   └── page.tsx
-│   │   ├── donate/
+│   │   ├── events/
 │   │   │   ├── layout.tsx
 │   │   │   └── page.tsx
-│   │   ├── events/
+│   │   ├── gallery/
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── getInvolved/
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── members/
 │   │   │   ├── layout.tsx
 │   │   │   └── page.tsx
 │   │   ├── news/

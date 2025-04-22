@@ -3,18 +3,15 @@
 export const en = {
     common: {
         footer: {
-            company: "Company",
-            careers: "Careers",
+            org: "Organization",
             social: "Social",
             engage: "Engage",
-            about: "About",
             contact: "Contact Us",
             dialogue: "Interreligious Dialogue",
             resources: "Resources",
             getInvolved: "Get Involved",
-            description: "Description",
+            description: "Inter Religious Council of Oromia",
             rights: "All rights reserved",
-            members: "Members",
         },
         navigation: {
             home: "Home",
@@ -23,7 +20,7 @@ export const en = {
             blogs: "Blogs",
             events: "Events",
             gallery: "Gallery",
-         
+            members: "Members",
         },
     },
     pages: {

@@ -1,10 +1,9 @@
 // @/translations/en.tsx
-import { User } from "lucide-react";
 
 export const am = {
     common: {
         footer: {
-            company: "Company",
+            org: "Organization",
             careers: "Careers",
             social: "Social",
             engage: "Engage",
@@ -13,9 +12,8 @@ export const am = {
             dialogue: "Interreligious Dialogue",
             resources: "Resources",
             getInvolved: "Get Involved",
-            description: "Description",
+            description: "Inter Religious Council of Oromia",
             rights: "All rights reserved",
-            members: "Members",
         },
         navigation: {
             home: "Home",
@@ -24,6 +22,7 @@ export const am = {
             blogs: "Blogs",
             events: "Events",
             gallery: "Gallery",
+            members: "Members",
         },
     },
     pages: {

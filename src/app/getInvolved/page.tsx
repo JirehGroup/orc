@@ -4,11 +4,9 @@ import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import Image from "next/image";
 import { HandCoins } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 const GetInvolvedPage = () => {
   const [openModal, setOpenModal] = useState<null | "donate">(null);
-  const router = useRouter();
 
   return (
     <div className="min-h-screen flex flex-col">
