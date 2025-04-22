@@ -18,6 +18,7 @@ const Footer = () => {
         { name: t.careers, href: "/careers" },
         { name: t.resources, href: "/resources" },
         { name: t.dialogue, href: "/dialogue" },
+        
 
       ],
     },
@@ -33,6 +34,7 @@ const Footer = () => {
       links: [
         { name: t.contact, href: "/contact" },
         { name: t.getInvolved, href: "/getInvolved" },
+        { name: t.members, href: "/members"},
       ],
       
     }

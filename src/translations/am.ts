@@ -15,6 +15,7 @@ export const am = {
             getInvolved: "Get Involved",
             description: "Description",
             rights: "All rights reserved",
+            members: "Members",
         },
         navigation: {
             home: "Home",
