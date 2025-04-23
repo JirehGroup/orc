@@ -21,12 +21,12 @@ const DialoguePage = () => {
         {/* Intro Section */}
         <section className="text-center max-w-4xl mx-auto">
           <h1 className="text-4xl font-bold mb-4">{dialogue.title}</h1>
-          <p className="text-lg flex justify-center items-center gap-2 text-sm mb-2">
+          <p className="text-lg flex justify-center items-center gap-2 mb-2">
             <Calendar className="w-4 h-4" />
             {dialogue.date}
           </p>
-          <p className="text-lg text-lg">{dialogue.content}</p>
-          <p className="text-sm text-lg flex justify-center items-center mt-2">
+          <p className="text-lg">{dialogue.content}</p>
+          <p className="text-sm flex justify-center items-center mt-2">
             <User className="w-4 h-4 mr-1" />
             {dialogue.author}
           </p>
