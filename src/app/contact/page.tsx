@@ -14,7 +14,7 @@ const ContactPage = () => {
           <div className="space-y-6">
             <h2 className="text-3xl font-bold mb-4">Get in Touch</h2>
             <p className="text-muted-foreground text-lg">
-              We'd love to hear from you! Reach out with any questions, feedback, or partnership ideas.
+              We&apos;d love to hear from you! Reach out with any questions, feedback, or partnership ideas.
             </p>
 
             <div className="space-y-4">
