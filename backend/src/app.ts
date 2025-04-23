@@ -7,7 +7,7 @@ import galleryRoutes from "./routes/galleryRoutes";
 import blogRoutes from "./routes/blogRoutes"; 
 import newsRoutes from "./routes/newsRoutes";
 import eventRoutes from "./routes/eventRoutes";
-
+import authRoutes from "./routes/authRoutes"; // Import auth routes
 
 const app = express();
 
@@ -21,5 +21,5 @@ app.use("/api/gallery", galleryRoutes);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/api/events', eventRoutes);
-
+app.use('/api/auth', authRoutes); 
 export default app;

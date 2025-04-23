@@ -12,11 +12,10 @@ const Footer = () => {
 
   const footerSections = [
     {
-      title: t.company,
+      title: t.org,
       links: [
-        { name: t.about, href: "/about" },
-        { name: t.careers, href: "/careers" },
-
+        { name: t.resources, href: "/resources" },
+        { name: t.dialogue, href: "/dialogue" },
       ],
     },
     {
@@ -32,6 +31,7 @@ const Footer = () => {
         { name: t.contact, href: "/contact" },
         { name: t.getInvolved, href: "/getInvolved" },
       ],
+
     }
   ];
 

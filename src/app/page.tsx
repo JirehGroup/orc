@@ -43,6 +43,7 @@ export default function HomePage() {
 
         {/* Members Carousel Section */}
         <section className="py-24 relative flex justify-center items-center">
+        <a href="/members">
           <div id="carousel" className="w-full max-w-5xl" ref={membersCarouselRef}>
             <h1 className="text-4xl font-bold text-center mb-12">Our Members</h1>
             <div className="carousel-track" ref={membersTrackRef}>
@@ -62,6 +63,7 @@ export default function HomePage() {
             </div>
             <StyleSheet />
           </div>
+        </a>
         </section>
       </main>
       <Footer />
