@@ -11,7 +11,7 @@ const members = [
     id: 1,
     name: "Ethiopian Catholic Church",
     leader: "Religious",
-    image: "/con.jpg",
+    image: "/images/leaders/OrtL.jpg",
     logo: "/images/logo/ecc.png",
     bio: "Are belief systems that relate humanity to spirituality",
     info: "The Ethiopian Catholic Church is a part of the worldwide Catholic Church, in full communion with the Pope in Rome. It has its own unique traditions and practices, reflecting the rich cultural heritage of Ethiopia. It has its own unique traditions and practices, reflecting the rich cultural heritage of Ethiopia. It has its own unique traditions and practices, reflecting the rich cultural heritage of Ethiopia. It has its own unique traditions and practices, reflecting the rich cultural heritage of Ethiopia.",
@@ -20,7 +20,7 @@ const members = [
     id: 2,
     name: "Evangelical Churches Fellowship of Ethiopia",
     leader: "Religious",
-    image: "/con.jpg",
+    image: "/images/leaders/EvaL.jpg",
     logo: "/images/logo/ecfoe.png",
     bio: "Are belief systems that relate humanity to spirituality",
     info: "The Ethiopian Catholic Church is a part of the worldwide Catholic Church, in full communion with the Pope in Rome. It has its own unique traditions and practices, reflecting the rich cultural heritage of Ethiopia.",
@@ -29,7 +29,7 @@ const members = [
     id: 3,
     name: "Ethiopian Evangelical Church Mekane Yesus",
     leader: "Religious",
-    image: "/con.jpg",
+    image: "/images/leaders/mekL.jpg",
     logo: "/images/logo/eecmy.png",
     bio: "Are belief systems that relate humanity to spirituality",
     info: "The Ethiopian Catholic Church is a part of the worldwide Catholic Church, in full communion with the Pope in Rome. It has its own unique traditions and practices, reflecting the rich cultural heritage of Ethiopia.",
@@ -38,7 +38,7 @@ const members = [
     id: 4,
     name: "Ethiopian Islamic Affairs Supreme Council",
     leader: "Religious",
-    image: "/con.jpg",
+    image: "/images/leaders/MusL.jpg",
     logo: "/images/logo/eias.png",
     bio: "Are belief systems that relate humanity to spirituality",
     info: "The Ethiopian Catholic Church is a part of the worldwide Catholic Church, in full communion with the Pope in Rome. It has its own unique traditions and practices, reflecting the rich cultural heritage of Ethiopia.",
@@ -47,7 +47,7 @@ const members = [
     id: 5,
     name: "Ethiopian Kale Heywet Church",
     leader: "Religious",
-    image: "/con.jpg",
+    image: "/images/leaders/KalL.jpg",
     logo: "/images/logo/ekhc.png",
     bio: "Are belief systems that relate humanity to spirituality",
     info: "The Ethiopian Catholic Church is a part of the worldwide Catholic Church, in full communion with the Pope in Rome. It has its own unique traditions and practices, reflecting the rich cultural heritage of Ethiopia.",
@@ -56,7 +56,7 @@ const members = [
     id: 6,
     name: "Ethiopian Orthodox Church",
     leader: "Religious",
-    image: "/con.jpg",
+    image: "/images/leaders/OrtL.jpg",
     logo: "/images/logo/eoc.png",
     bio: "Are belief systems that relate humanity to spirituality",
     info: "The Ethiopian Catholic Church is a part of the worldwide Catholic Church, in full communion with the Pope in Rome. It has its own unique traditions and practices, reflecting the rich cultural heritage of Ethiopia.",
@@ -65,7 +65,7 @@ const members = [
     id: 7,
     name: "Ethiopian Seventh-day Adventist Church",
     leader: "Religious",
-    image: "/con.jpg",
+    image: "/images/leaders/AdvL.jpg",
     logo: "/images/logo/esda.png",
     bio: "Are belief systems that relate humanity to spirituality",
     info: "The Ethiopian Catholic Church is a part of the worldwide Catholic Church, in full communion with the Pope in Rome. It has its own unique traditions and practices, reflecting the rich cultural heritage of Ethiopia.",
@@ -124,14 +124,14 @@ const MembersPage: React.FC = () => {
               </div>
 
               {/* Member Image */}
-              <div className="w-full md:w-1/2 h-[500px] relative overflow-hidden shadow-lg flex flex-col items-center">
+              <div className="w-full md:w-1/2 h-[500px] relative overflow-hidden shadow-lg flex items-center justify-center group">
                 <img
                   src={member.image}
                   alt={member.name}
                   className="w-full h-full object-cover transform transition duration-300 hover:scale-105 "
                 />
                 {/* Leader Name */}
-                <p className="mt-4 text-lg font-semibold text-gray-800 dark:text-white">
+                <p className="absolute bottom-4 left-4 text-4xl text-red-600 bg-opacity-50 transition-opacity duration-300 opacity-0 group-hover:opacity-100">
                   {member.leader}
                 </p>
               </div>
