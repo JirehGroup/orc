@@ -1,15 +1,17 @@
 import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {  
+const nextConfig: NextConfig = {
   reactStrictMode: true,
 
   images: {
-    unoptimized: false,
+    unoptimized: true,
   },
 
   typescript: {
     ignoreBuildErrors: false,
   },
+
+  output: "export",
 };
 
 export default nextConfig;
