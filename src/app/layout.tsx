@@ -5,7 +5,6 @@ import { Geist, Geist_Mono, Roboto_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Metadata } from "next";
-import Flag from '@/components/common/flag';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -85,7 +84,6 @@ export default function RootLayout({
       >
         <Providers>
           <div className="min-h-screen flex flex-col bg-background transition-colors duration-300">
-            <Flag />
             <main className="flex-1 flex flex-col">{children}</main>
           </div>
 
