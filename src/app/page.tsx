@@ -11,11 +11,11 @@ import { StyleSheet, useInfiniteCarousel } from "@/components/ui/custom/Carousel
 import { DirectionAwareHover } from "@/components/ui/aceternity/direction-aware-hover";
 import { TimelinePage } from "@/components/ui/custom/Timeline";
 import { Hero } from "@/components/common/Hero";
+import Flag from "@/components/common/flag"; // Import the flag
 
 export default function HomePage() {
   const { language } = useLanguage();
   const t = translations[language].pages.home;
-
   const { carouselRef: membersCarouselRef, carouselTrackRef: membersTrackRef } = useInfiniteCarousel();
   const memberLogos = [
     { src: "/images/logo/ecc.png", label: "Ethiopian Catholic Church" },
@@ -28,45 +28,50 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-background overflow-hidden">
-      <Header />
+    <div className="flex min-h-screen bg-background overflow-hidden">
+      {/* Flag on the left */}
+      <Flag />
 
-      {/* Hero Section */}
-      <main className="flex-grow">
-        <section className="py-24">
-          <Hero />
-        </section>
+      {/* Page content */}
+      <div className="flex flex-col flex-grow">
+        <Header />
 
-        <section className="py-24">
-          <TimelinePage />
-        </section>
+        <main className="flex-grow">
+          <section className="py-24">
+            <Hero />
+          </section>
 
-        {/* Members Carousel Section */}
-        <section className="py-24 relative flex justify-center items-center">
-        <a href="/members">
-          <div id="carousel" className="w-full max-w-5xl" ref={membersCarouselRef}>
-            <h1 className="text-4xl font-bold text-center mb-12">Our Members</h1>
-            <div className="carousel-track" ref={membersTrackRef}>
-              <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center">
-                {memberLogos.map((item, index) => (
-                  <li key={index} className="flex items-center justify-center">
-                    <DirectionAwareHover
-                      imageUrl={item.src}
-                      className="w-full h-[200px] flex items-center justify-center"
-                      imageClassName="object-contain max-w-full max-h-full"
-                    >
-                      {item.label}
-                    </DirectionAwareHover>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <StyleSheet />
-          </div>
-        </a>
-        </section>
-      </main>
-      <Footer />
+          <section className="py-24">
+            <TimelinePage />
+          </section>
+
+          <section className="py-24 relative flex justify-center items-center">
+            <a href="/members">
+              <div id="carousel" className="w-full max-w-5xl" ref={membersCarouselRef}>
+                <h1 className="text-4xl font-bold text-center mb-12">Our Members</h1>
+                <div className="carousel-track" ref={membersTrackRef}>
+                  <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center">
+                    {memberLogos.map((item, index) => (
+                      <li key={index} className="flex items-center justify-center">
+                        <DirectionAwareHover
+                          imageUrl={item.src}
+                          className="w-full h-[200px] flex items-center justify-center"
+                          imageClassName="object-contain max-w-full max-h-full"
+                        >
+                          {item.label}
+                        </DirectionAwareHover>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <StyleSheet />
+              </div>
+            </a>
+          </section>
+        </main>
+
+        <Footer />
+      </div>
     </div>
   );
 }
