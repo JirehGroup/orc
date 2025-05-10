@@ -2,7 +2,8 @@
 // @/app/page.tsx
 
 "use client";
-import React from "react";
+import React, { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import { translations } from "@/translations";
@@ -11,11 +12,15 @@ import { StyleSheet, useInfiniteCarousel } from "@/components/ui/custom/Carousel
 import { DirectionAwareHover } from "@/components/ui/aceternity/direction-aware-hover";
 import { TimelinePage } from "@/components/ui/custom/Timeline";
 import { Hero } from "@/components/common/Hero";
-import Flag from "@/components/common/flag"; // Import the flag
+import Flag from "@/components/common/flag";
 
 export default function HomePage() {
   const { language } = useLanguage();
   const t = translations[language].pages.home;
+  const searchParams = useSearchParams();
+  const defaultId = parseInt(searchParams.get("member") || "1", 10);
+  const [selectedMemberId, setSelectedMemberId] = useState<number>(defaultId);
+
   const { carouselRef: membersCarouselRef, carouselTrackRef: membersTrackRef } = useInfiniteCarousel();
   const memberLogos = [
     { src: "/images/logo/ecc.png", label: "Ethiopian Catholic Church" },
@@ -46,27 +51,28 @@ export default function HomePage() {
           </section>
 
           <section className="py-24 relative flex justify-center items-center">
-            <a href="/members">
-              <div id="carousel" className="w-full max-w-5xl" ref={membersCarouselRef}>
-                <h1 className="text-4xl font-bold text-center mb-12">Our Members</h1>
-                <div className="carousel-track" ref={membersTrackRef}>
-                  <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center">
-                    {memberLogos.map((item, index) => (
-                      <li key={index} className="flex items-center justify-center">
+            <div id="carousel" className="w-full max-w-5xl" ref={membersCarouselRef}>
+              <h1 className="text-4xl font-bold text-center mb-12">Our Members</h1>
+              <div className="carousel-track" ref={membersTrackRef}>
+                <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center">
+                  {memberLogos.map((item, index) => (
+                    <li key={index} className="flex items-center justify-center">
+                      <a href={`/members?member=${index + 1}`}>
                         <DirectionAwareHover
                           imageUrl={item.src}
-                          className="w-full h-[200px] flex items-center justify-center"
-                          imageClassName="object-contain max-w-full max-h-full"
+                          className="relative w-full h-[200px] overflow-hidden rounded-lg shadow-lg group"
+                          imageClassName="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
                         >
                           {item.label}
                         </DirectionAwareHover>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <StyleSheet />
+                      </a>
+
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </a>
+              <StyleSheet />
+            </div>
           </section>
         </main>
 
