@@ -4,6 +4,7 @@
 "use client";
 import React, { useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 
@@ -98,38 +99,58 @@ const MembersPage: React.FC = () => {
           </p>
         </section>
 
-        {/* Top Navbar */}
+        {/* Member Selector Navbar */}
         <nav className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow sticky top-0 z-10">
-          <div className="max-w-7xl mx-auto flex overflow-x-auto px-4 py-2 space-x-4">
-            {members.map((member) => (
-              <button
-                key={member.id}
-                onClick={() => setSelectedMemberId(member.id)}
-                className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 ${selectedMemberId === member.id
-                    ? "bg-red-600 text-white"
-                    : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-                  }`}
-              >
-                {member.name}
-              </button>
-            ))}
+          <div className="max-w-7xl mx-auto px-4 py-4 overflow-x-auto">
+            <div className="flex gap-4 items-center">
+              {members.map((member) => (
+                <button
+                  key={member.id}
+                  onClick={() => setSelectedMemberId(member.id)}
+                  className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-lg border transition-all duration-300
+            ${selectedMemberId === member.id
+                      ? "bg-red-600 border-red-700 text-white shadow-md"
+                      : "bg-gray-100 dark:bg-gray-700 border-transparent text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600"
+                    }`}
+                >
+                  <img
+                    src={member.logo}
+                    alt={`${member.name} logo`}
+                    className="w-8 h-8 object-contain rounded-full"
+                  />
+                  <span className="whitespace-nowrap text-sm font-medium">{member.name}</span>
+                </button>
+              ))}
+            </div>
           </div>
         </nav>
 
         {/* Member Detail Section */}
         <section className="py-16 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
-          <div className="bg-gradient-to-r from-gray-600 to-red-500 dark:from-red-400 dark:to-gray-700 text-white py-10 px-4 lg:px-24 mb-12">
-            <div className="max-w-7xl mx-auto flex items-center justify-center gap-6">
-              <div className="w-24 h-24 relative">
-                <img
-                  src={selectedMember.logo}
-                  alt={`${selectedMember.name} Logo`}
-                  className="w-full h-full object-contain rounded-full shadow-md"
-                />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedMember.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+              className="relative mb-12 w-full"
+            >
+              <div className="flex items-center gap-6 max-w-5xl mx-auto px-6 py-8 rounded-lg shadow-md bg-gradient-to-r from-red-500 to-gray-800">
+                <div className="w-20 h-20 md:w-24 md:h-24 flex-shrink-0 bg-red-600 bg-opacity-20 rounded-full flex items-center justify-center shadow-inner">
+                  <img
+                    src={selectedMember.logo}
+                    alt={`${selectedMember.name} Logo`}
+                    className="w-12 h-12 md:w-16 md:h-16 object-contain"
+                  />
+                </div>
+                <h2 className="text-white font-mono text-2xl md:text-3xl font-bold tracking-wide">
+                  {selectedMember.name}
+                </h2>
               </div>
-              <h2 className="text-4xl font-extrabold">{selectedMember.name}</h2>
-            </div>
-          </div>
+            </motion.div>
+          </AnimatePresence>
+
 
           <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-16 px-4 lg:px-0">
             <div className="w-full md:w-1/2 text-center md:text-left">
