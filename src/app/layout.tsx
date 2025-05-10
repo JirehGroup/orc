@@ -83,10 +83,9 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <Providers>
-          <div className="min-h-screen flex flex-col bg-background transition-colors duration-300">
-            <main className="flex-1 flex flex-col">{children}</main>
+          <div className="min-h-screen bg-background transition-colors duration-300">
+            {children}
           </div>
-
         </Providers>
       </body>
     </html>

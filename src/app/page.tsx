@@ -2,8 +2,8 @@
 // @/app/page.tsx
 
 "use client";
-import React, { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import React from "react";
+import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
 import { translations } from "@/translations";
@@ -12,14 +12,10 @@ import { StyleSheet, useInfiniteCarousel } from "@/components/ui/custom/Carousel
 import { DirectionAwareHover } from "@/components/ui/aceternity/direction-aware-hover";
 import { TimelinePage } from "@/components/ui/custom/Timeline";
 import { Hero } from "@/components/common/Hero";
-import Flag from "@/components/common/flag";
 
 export default function HomePage() {
   const { language } = useLanguage();
   const t = translations[language].pages.home;
-  const searchParams = useSearchParams();
-  const defaultId = parseInt(searchParams.get("member") || "1", 10);
-  const [selectedMemberId, setSelectedMemberId] = useState<number>(defaultId);
 
   const { carouselRef: membersCarouselRef, carouselTrackRef: membersTrackRef } = useInfiniteCarousel();
   const memberLogos = [
@@ -33,51 +29,49 @@ export default function HomePage() {
   ];
 
   return (
-    <div className="flex min-h-screen bg-background overflow-hidden">
-      {/* Flag on the left */}
-      <Flag />
+    <div className="flex flex-col min-h-screen bg-background overflow-hidden">
+      <Header />
 
-      {/* Page content */}
-      <div className="flex flex-col flex-grow">
-        <Header />
+      {/* Hero Section */}
+      <main className="flex-grow">
+        <section className="py-24">
+          <Hero />
+        </section>
 
-        <main className="flex-grow">
-          <section className="py-24">
-            <Hero />
-          </section>
+        <section className="py-24">
+          <TimelinePage />
+        </section>
 
-          <section className="py-24">
-            <TimelinePage />
-          </section>
-
-          <section className="py-24 relative flex justify-center items-center">
-            <div id="carousel" className="w-full max-w-5xl" ref={membersCarouselRef}>
-              <h1 className="text-4xl font-bold text-center mb-12">Our Members</h1>
-              <div className="carousel-track" ref={membersTrackRef}>
-                <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center">
-                  {memberLogos.map((item, index) => (
-                    <li key={index} className="flex items-center justify-center">
-                      <a href={`/members?member=${index + 1}`}>
+        {/* Members Carousel Section */}
+        <section className="py-24 relative flex justify-center items-center">
+          <div id="carousel" className="w-full max-w-5xl" ref={membersCarouselRef}>
+            <h1 className="text-4xl font-bold text-center mb-12">Our Members</h1>
+            <div className="carousel-track" ref={membersTrackRef}>
+              <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 place-items-center">
+                {memberLogos.map((item, index) => (
+                  <li key={index} className="flex items-center justify-center w-full">
+                    <Link href={`/members?member=${index + 1}`} className="block w-full">
+                      <div className="w-full h-[200px] flex items-center justify-center">
                         <DirectionAwareHover
                           imageUrl={item.src}
-                          className="relative w-full h-[200px] overflow-hidden rounded-lg shadow-lg group"
-                          imageClassName="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105"
+                          className="w-full h-full flex items-center justify-center"
+                          imageClassName="object-contain max-w-full max-h-full"
                         >
                           {item.label}
                         </DirectionAwareHover>
-                      </a>
-
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <StyleSheet />
+                      </div>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </section>
-        </main>
+            <StyleSheet />
+          </div>
+        </section>
 
-        <Footer />
-      </div>
+      </main>
+      <Footer />
     </div>
   );
 }
+
