@@ -88,23 +88,23 @@ export const DirectionAwareHover = ({
           >
             <Image
               alt="image"
+              src={imageUrl}
+              fill
               className={cn(
-                "h-full w-full object-cover scale-[1.15]",
+                "object-contain p-4 transition-transform duration-300 group-hover/card:scale-105",
                 imageClassName
               )}
-              width="1000"
-              height="1000"
-              src={imageUrl}
             />
+
           </motion.div>
           <motion.div
             variants={textVariants}
             transition={{
-              duration: 0.5,
+              duration: 0.4,
               ease: "easeOut",
             }}
             className={cn(
-              "text-white absolute bottom-4 left-4 z-40",
+              "absolute inset-0 z-40 flex items-center justify-center text-white text-center text-sm font-semibold opacity-0 group-hover/card:opacity-100 transition-opacity duration-300",
               childrenClassName
             )}
           >
