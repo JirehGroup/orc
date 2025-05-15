@@ -36,16 +36,6 @@ export const Timeline = ({ data }: { data: TimelineEntry[] }) => {
         <h2 className="text-lg md:text-4xl mb-4 text-black dark:text-white max-w-4xl">
           About us
         </h2>
-        <p className="text-neutral-700 dark:text-neutral-300 text-sm md:text-base max-w-sm">
-          The Inter-Religious Council of Oromia (IRCO) is a platform that brings
-          together various religious leaders and organizations in Oromia,
-          Ethiopia. It aims to promote peace, tolerance, and understanding among
-          different faiths, fostering a harmonious coexistence within the
-          diverse communities of the region.
-          <br />
-          <br />
-          This describes our mission and vision, as well as the values that guide our work.
-        </p>
       </div>
 
       <div ref={ref} className="relative max-w-7xl mx-auto pb-20">

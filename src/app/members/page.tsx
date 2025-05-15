@@ -14,7 +14,7 @@ const members = [
     id: 1,
     name: "Ethiopian Catholic Church",
     leader: "Religious",
-    image: "/images/leaders/OrtL.jpg",
+    image: "/images/leaders/.jpg",
     logo: "/images/logo/ecc.png",
     bio: "Are belief systems that relate humanity to spirituality",
     info: "The Ethiopian Catholic Church is a part of the worldwide Catholic Church, in full communion with the Pope in Rome. It has its own unique traditions and practices, reflecting the rich cultural heritage of Ethiopia. It has its own unique traditions and practices, reflecting the rich cultural heritage of Ethiopia. It has its own unique traditions and practices, reflecting the rich cultural heritage of Ethiopia. It has its own unique traditions and practices, reflecting the rich cultural heritage of Ethiopia.",

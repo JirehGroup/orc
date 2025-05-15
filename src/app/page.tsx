@@ -3,6 +3,7 @@
 
 "use client";
 import React from "react";
+import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
@@ -34,9 +35,13 @@ export default function HomePage() {
 
       {/* Hero Section */}
       <main className="flex-grow">
+        
+
         <section className="py-24">
           <Hero />
         </section>
+
+        
 
         <section className="py-24">
           <TimelinePage />

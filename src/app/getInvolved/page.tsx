@@ -1,3 +1,5 @@
+// @/getInvolved/page.tsx
+
 "use client";
 import React, { useState } from "react";
 import Header from "@/components/common/Header";
@@ -25,17 +27,20 @@ const GetInvolvedPage = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-40 mb-8 ">
-            {["/cbe.png", "/awash.png"].map((src, index) => (
+            {["/images/cbe.png", "/images/awash.png"].map((src, index) => (
               <div
                 key={index}
-                className="relative h-125 rounded overflow-hidden shadow-md group"
+                className="relative h-125 bg-white rounded overflow-hidden shadow-md group flex items-center justify-center"
               >
+
                 <Image
                   src={src}
                   alt={`Donate image ${index + 1}`}
-                  fill
-                  className="object-cover"
+                  width={500} // or any appropriate width
+                  height={300} // or any appropriate height
+                  className="object-contain w-full h-full p-4"
                 />
+
                 {/* Donate Now Button */}
                 <button
                   onClick={() => setOpenModal("donate")}
