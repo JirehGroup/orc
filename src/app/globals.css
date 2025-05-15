@@ -118,6 +118,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-poppins), sans-serif;
   }
   :root {
     font-family: var(--font-roboto-mono), var(--font-geist-mono), ui-monospace,

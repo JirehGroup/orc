@@ -1,25 +1,31 @@
 // @/app/layout.tsx
 
 import { Providers } from "./providers";
-import { Geist, Geist_Mono, Roboto_Mono } from "next/font/google";
+import { Poppins, Geist } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Metadata } from "next";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// const geistMono = Geist_Mono({
+//   variable: "--font-geist-mono",
+//   subsets: ["latin"],
+// });
 
-const robotoMono = Roboto_Mono({
-  subsets: ["latin"],
-  variable: "--font-roboto-mono",
-});
+// const robotoMono = Roboto_Mono({
+//   subsets: ["latin"],
+//   variable: "--font-roboto-mono",
+// });
 
 const entoto = localFont({
   src: "../../public/fonts/entoto.ttf",
@@ -79,7 +85,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${robotoMono.variable} ${entoto.variable} font-mono antialiased`}
+        className={`${poppins.variable} ${geistSans.variable} ${entoto.variable} font-sans antialiased`}
         suppressHydrationWarning
       >
         <Providers>
