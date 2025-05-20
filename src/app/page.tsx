@@ -3,7 +3,6 @@
 
 "use client";
 import React from "react";
-import Image from "next/image";
 import { motion } from "motion/react";
 import Link from "next/link";
 import Header from "@/components/common/Header";
@@ -14,7 +13,8 @@ import { StyleSheet, useInfiniteCarousel } from "@/components/ui/custom/Carousel
 import { ImagesSlider } from "@/components/ui/aceternity/images-slider";
 import { DirectionAwareHover } from "@/components/ui/aceternity/direction-aware-hover";
 import { TimelinePage } from "@/components/ui/custom/Timeline";
-import { Hero } from "@/components/common/Hero";
+import Flag from "@/components/common/flag";
+// import { Hero } from "@/components/common/Hero";
 
 export default function HomePage() {
   const { language } = useLanguage();
@@ -39,12 +39,14 @@ export default function HomePage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background overflow-hidden">
+      <Flag />
+      
       <Header />
 
       {/* Hero Section */}
       <main className="flex-grow">
         <section className="py-24">
-          <Hero />
+          {/* <Hero /> */}
 
           <ImagesSlider className="h-[40rem]" images={images}>
             <motion.div
@@ -61,9 +63,9 @@ export default function HomePage() {
               }}
               className="z-50 flex flex-col justify-center items-center"
             >
-              {/* <motion.p className="font-bold text-xl md:text-6xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 py-4">
-                The hero section slideshow <br /> nobody asked for
-              </motion.p> */}
+              <motion.p className="font-bold text-xl md:text-6xl text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 py-4">
+                Welcome to Inter-Religious Council of Oromia
+              </motion.p>
             </motion.div>
           </ImagesSlider>
 
